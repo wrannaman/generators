@@ -125,8 +125,8 @@ node index.js \
     .
     ├── configs                 # config file
     ├── connection              # db connections (mongo, redis)
-    ├── controller              #
-    │   ├── user                # controller functions (one file, one function) create, delete, update, get, getOne
+    ├── controller              # Controllers
+    │   ├── <model name>        # Functions (one file, one function) create, delete, update, get, getOne
     ├── models                  # db models
     ├── router                  # endpoint routes
     ├── tests                   # @TODO
