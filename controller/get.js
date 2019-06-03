@@ -14,7 +14,7 @@ module.exports = ({ schema, logging, destination, name }) => {
     sugarGenerated(),
     `const ${uppercase(name)} = require("../../models/${name}.js");`,
     `const { userCanApiKey } = require('../../configs/config');`,
-    `const userCan = require('user-can')(userCanApiKey);`,
+    `const userCan = require('../../user-can')(userCanApiKey);`,
   ];
   const swagger = [
     "/*",

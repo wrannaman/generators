@@ -1,0 +1,149 @@
+{
+  "env": {
+    "browser": false,
+    "es6": true,
+    "mocha": true,
+    "node": true,
+    "worker": false,
+    "jest": true
+  },
+  "extends": ["airbnb"],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "globalReturn": true,
+      "impliedStrict": true,
+      "destructuring": true,
+      "restParams": true,
+      "spread": true
+    }
+  },
+  "rules": {
+    "array-bracket-spacing": "warn",
+    "array-callback-return": "warn",
+    "arrow-body-style": "off",
+    "arrow-parens": "off",
+    "arrow-spacing": [
+      "warn",
+      {
+        "after": true,
+        "before": true
+      }
+    ],
+    "camelcase": "off",
+    "class-methods-use-this": "warn",
+    "comma-dangle": [
+      "warn",
+      {
+        "arrays": "only-multiline",
+        "objects": "only-multiline",
+        "imports": "only-multiline",
+        "exports": "only-multiline",
+        "functions": "ignore"
+      }
+    ],
+    "consistent-return": "off",
+    "function-paren-newline": "off",
+    "global-require": "off",
+    "guard-for-in": "off",
+    "implicit-arrow-linebreak": "off",
+    "import/extensions": "warn",
+    "import/first": "off",
+    "import/newline-after-import": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/no-named-as-default": "warn",
+    "import/no-named-as-default-member": "warn",
+    "import/no-useless-path-segments": "warn",
+    "import/order": "off",
+    "import/prefer-default-export": "off",
+    "indent": "warn",
+    "jsx-a11y/alt-text": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/media-has-caption": "off",
+    "jsx-a11y/mouse-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/no-noninteractive-tabindex": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "lines-between-class-members": "off",
+    "max-len": [
+      "off",
+      {
+        "code": 98,
+        "comments": 120,
+        "ignoreRegExpLiterals": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreUrls": true,
+        "tabWidth": 2
+      }
+    ],
+    "new-parens": "warn",
+    "no-bitwise": "off",
+    "no-case-declarations": "warn",
+    "no-console": [
+      "warn",
+      {
+        "allow": ["error"]
+      }
+    ],
+    "no-continue": "off",
+    "no-else-return": "off",
+    "no-empty": "warn",
+    "no-extra-boolean-cast": "off",
+    "no-lonely-if": "warn",
+    "no-mixed-operators": "off",
+    "no-mixed-spaces-and-tabs": "warn",
+    "no-multi-assign": "off",
+    "no-multiple-empty-lines": "warn",
+    "no-multi-spaces": "warn",
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "no-prototype-builtins": "off",
+    "no-restricted-globals": "off",
+    "no-restricted-properties": "off",
+    "no-restricted-syntax": "warn",
+    "no-return-assign": "off",
+    "no-return-await": "warn",
+    "no-shadow": "warn",
+    "no-tabs": "warn",
+    "no-trailing-spaces": "warn",
+    "no-undef-init": "off",
+    "no-underscore-dangle": "off",
+    "no-unneeded-ternary": "off",
+    "no-unreachable": "warn",
+    "no-unused-vars": ["warn", {
+      "ignoreRestSiblings": true
+    }],
+    "no-useless-escape": "warn",
+    "no-useless-return": "warn",
+    "no-warning-comments": "off",
+    "object-curly-newline": [
+      "off",
+      {
+        "ObjectExpression": { "multiline": true, "minProperties": 3 },
+        "ObjectPattern": { "multiline": true, "minProperties": 3 },
+        "ImportDeclaration": { "multiline": true, "minProperties": 3 },
+        "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+      }
+    ],
+    "object-curly-spacing": "off",
+    "object-property-newline": "off",
+    "operator-assignment": "off",
+    "operator-linebreak": "off",
+    "padded-blocks": "off",
+    "prefer-const": "warn",
+    "prefer-destructuring": "off",
+    "prefer-promise-reject-errors": "warn",
+    "prefer-spread": "warn",
+    "prefer-template": "warn",
+    "quotes": "off",
+    "semi": "warn",
+    "space-before-function-paren": "off",
+    "spaced-comment": "off",
+    "space-in-parens": "warn"
+  }
+}

@@ -1,6 +1,4 @@
 const fs = require('fs');
-const { connectionIndex, connectionMongo,  } = require('../mongodb');
-const { connectionRedis } = require('../redis');
 const { schemaDefinition } = require('../swagger');
 
 module.exports = ({ schema, logging, destination, name }) => {
@@ -18,9 +16,9 @@ module.exports = ({ schema, logging, destination, name }) => {
       description: Optional server description, e.g. Internal staging server for testing
   components:
     schemas:
-`
+`;
   const code = [top];
-  code.push(schemaDefinition({ schema, name }))
+  code.push(schemaDefinition({ schema, name }));
   if (logging) console.log('make swagger model definitions ');
-  fs.writeFileSync(swaggerFile, code.join('\n'))
-}
+  fs.writeFileSync(swaggerFile, code.join('\n'));
+};
