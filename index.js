@@ -10,6 +10,8 @@ const {
   makeSwaggerModelDefinitions,
 } = require('./utils');
 
+const { makeRouter } = require('./router');
+
 const {
   makeConnection,
 } = require('./mongodb');
@@ -86,6 +88,7 @@ const letzGetIt = async () => {
   await makeModelIndex(args);
   await makeAPI(args);
   await makeSwaggerModelDefinitions(args);
+  await makeRouter(args);
   if (args.logging) console.log('all done 🚀');
 };
 

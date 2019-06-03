@@ -4,6 +4,9 @@ module.exports = {
   makeModelIndex: require('./makeModelIndex'),
   makeSwaggerModelDefinitions: require('./makeSwaggerModelDefinitions'),
   uppercase: require('./uppercase'),
-  validationCode: require('./validationCode'),
+  createValidationCode: require('./createValidationCode'),
+  getValidationCode: require('./getValidationCode'),
+  createUpdateCode: require('./createUpdateCode'),
   sugarGenerated: require('./sugarGenerated'),
+  extraParams: require('./extraParams'),
 };

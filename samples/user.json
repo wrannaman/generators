@@ -1,13 +1,25 @@
 {
   "schema": {
+    "first_name": {
+      "type": "String",
+      "default": ""
+    },
+    "last_name": {
+      "type": "String",
+      "default": ""
+    },
     "email": {
       "type": "String",
       "trim": true,
-      "required": true
+      "required": true,
+      "unique": true,
+      "immutable": true
     },
     "password": {
       "type": "String",
-      "trim": true
+      "trim": true,
+      "select": false,
+      "immutable": true
     },
     "intro": {
       "type": "Boolean",

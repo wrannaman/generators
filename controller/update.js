@@ -2,11 +2,11 @@ const fs = require('fs');
 const beautify = require('js-beautify').js;
 
 module.exports = ({ schema, logging, destination, name }) => {
-  const { uppercase, createValidationCode, sugarGenerated } = require('../utils');
-  if (logging) console.log(`API => CRUD => CREATE ${name}`);
+  const { uppercase, createUpdateCode, sugarGenerated } = require('../utils');
+  if (logging) console.log(`API => CRUD => UPDATE ${name}`);
   schema = require(schema); // eslint-disable-line
   const controllerSubFolder = `${destination}/controller/${name}`;
-  const createFile = `${controllerSubFolder}/create.js`;
+  const createFile = `${controllerSubFolder}/update.js`;
 
   let code = [];
   const top = [
@@ -18,11 +18,18 @@ module.exports = ({ schema, logging, destination, name }) => {
 
   const swagger = [
     "/*",
-    `* @oas [post] /${name}`,
-    `* summary: "create a ${name}"`,
+    `* @oas [put] /${name}/:id`,
+    `* summary: "update a ${name}"`,
     `* tags: ["${name}"]`,
+    `* parameters:`,
+    `*   - name: 'id'`,
+    `*     in: 'url'`,
+    `*     description: id of the ${name}`,
+    `*     schema:`,
+    `*       type: 'string'`,
+    `*       example: "123456"`,
     `* requestBody:`,
-    `*   description: ${uppercase(name)} - **Create** `,
+    `*   description: ${uppercase(name)} - **Update** `,
     `*   required: true`,
     `*   content:`,
     `*     application/json:`,
@@ -30,18 +37,20 @@ module.exports = ({ schema, logging, destination, name }) => {
     `*        $ref: '#/components/schemas/${uppercase(name)}'`,
     `* responses:`,
     `*   "200":`,
-    `*     description: "create a ${name}"`,
+    `*     description: "update a ${name}"`,
     `*     schema:`,
     `*       type: "${uppercase(name)}"`,
     "*/",
   ];
   const schemaKeys = Object.keys(schema.schema);
-  const validate = createValidationCode(schema.schema, name);
+  const validate = createUpdateCode(schema.schema, name);
   const func = [
     `module.exports = async (req, res) => {`,
     `  try {`,
     `    const { ${schemaKeys.join(', ')}} = req.body;`,
-    `    const new${uppercase(name)} = {};`,
+    `    const { id } = req.params;`,
+    `    const existing${uppercase(name)} = await ${uppercase(name)}.findOne({ _id: id });`,
+    `    if (!existing${uppercase(name)}) throw new Error('${name} not found.');`,
   ];
   const end = [
     `    `,
@@ -54,7 +63,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   const permissions = [
     ``,
     `// @TODO Permissions`,
-    `const permission = userCan(req.user._id, 'create', 'user');`,
+    `const permission = userCan(req.user._id, 'update', 'user');`,
     `if (!permission) throw new Error('Permission denied for userCan create user')`,
     ``
   ];
@@ -67,8 +76,8 @@ module.exports = ({ schema, logging, destination, name }) => {
   ];
   const save = [
     `// save`,
-    `const created = await ${uppercase(name)}.create(new${uppercase(name)});`,
-    `return res.json({ ${name}: created });`
+    `const updated = await existing${uppercase(name)}.save();`,
+    `return res.json({ ${name}: updated });`
   ];
   code = code.concat(top, swagger, func, validate, permissions, safeArea, save, end);
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });

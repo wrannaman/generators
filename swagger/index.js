@@ -1,4 +1,6 @@
 module.exports = {
   safeType: require('./safeType'),
-  schemaDefinition: require('./schemaDefinition')
+  safeDefault: require('./safeDefault'),
+  schemaDefinition: require('./schemaDefinition'),
+  makeProperties: require('./makeProperties'),
 };
