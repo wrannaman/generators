@@ -54,7 +54,7 @@ nodemon index.js \
 
 ## Example Schema
 
-```json
+```js
 {
   "schema": {
     "first_name": {
