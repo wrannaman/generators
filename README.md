@@ -2,14 +2,41 @@
 
 ![Sugar Generator - API Edition](./logo.png)
 
+
+## Features
+
+- uses mongodb with mongoose ORM
+- support search, sort, filter, pagination out of the box
+- Generates CRUD APIs
+
+## What it's good at
+
+- generating an initial API
+- microservice oriented
+- ready to deploy (build with docker => deploy)
+
+## What it's not good at (yet)
+
+- idempotent changes (i.e. it doesn't know if you wrote code in there or changed things around)
+- working with modified code
+- populating table joins
+- custom actions inside controller functions
+
+## TODO
+
+- generator tests
+- tests for generated code
+- other databases?
+- **your ideas?**
+
 ## Generate api endpoint
 
-```
+```sh
 nodemon index.js \
 --type api \
 --name user \
 --schema ./samples/user.json \
---destination /var/andrew/generator
+--destination /wrannaman/generator
 ```
 
 
@@ -75,3 +102,18 @@ nodemon index.js \
 }
 
 ```
+
+
+## Generated project structure
+
+- meant to be as minimal and straight-forward as possible
+
+
+    .
+    ├── configs                 # config file
+    ├── connection              # db connections (mongo, redis)
+    ├── controller              #
+    │   ├── user                # controller functions (one file, one function) create, delete, update, get, getOne
+    ├── models                  # db models
+    ├── router                  # endpoint routes
+    ├── tests                   # @TODO
