@@ -9,7 +9,7 @@ module.exports = {
     port: 6379,
     password: ""
   },
-  jwt_secret: "e4b717984dab52c8168f5b61bbb8bea42acfe921",
+  jwt_secret: "sugar-secret",
   basicAuth: {
     username: "sugar",
     password: "kubes"
