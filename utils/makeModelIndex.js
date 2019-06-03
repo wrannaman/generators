@@ -1,7 +1,7 @@
 const fs = require('fs');
 const beautify = require('js-beautify').js;
 
-const { modelIndex } = require('../code');
+const { modelIndex } = require('../mongodb');
 
 module.exports = ({ schema, logging, destination }) => {
   const modelFolder = `${destination}/models`;

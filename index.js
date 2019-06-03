@@ -1,23 +1,29 @@
 #!/usr/bin/env node
-'use strict';
 
 const path = require('path');
+const { ArgumentParser } = require('argparse');
+
 const {
   makeSchema,
-  makeConnection,
   makeConfig,
-  makeModelIndex
+  makeModelIndex,
+  makeSwaggerModelDefinitions,
 } = require('./utils');
-const { ArgumentParser } = require('argparse');
+
+const {
+  makeConnection,
+} = require('./mongodb');
+
+const { makeAPI } = require('./controller');
 
 const parser = new ArgumentParser({
   version: '0.0.1',
-  addHelp:true,
+  addHelp: true,
   description: 'Sugar Generator',
 });
 
 parser.addArgument(
-  [ '-t', '--type' ],
+  ['-t', '--type'],
   {
     help: 'one of ["api", "component"]',
     choices: ["api", "component"],
@@ -28,7 +34,7 @@ parser.addArgument(
 );
 
 parser.addArgument(
-  [ '-n', '--name' ],
+  ['-n', '--name'],
   {
     help: 'api name',
     required: true,
@@ -38,7 +44,7 @@ parser.addArgument(
 );
 
 parser.addArgument(
-  [ '-s', '--schema' ],
+  ['-s', '--schema'],
   {
     help: 'path to JSON of mongodb schema',
     required: true,
@@ -48,7 +54,7 @@ parser.addArgument(
 );
 
 parser.addArgument(
-  [ '-l', '--log' ],
+  ['-l', '--log'],
   {
     help: 'logging',
     choices: [true, false],
@@ -58,17 +64,29 @@ parser.addArgument(
   }
 );
 
+parser.addArgument(
+  ['-d', '--destination'],
+  {
+    help: 'destination',
+    metavar: "destination",
+    dest: "destination",
+    defaultValue: __dirname,
+  }
+);
+
 const args = parser.parseArgs();
 
-args.schema =  path.join(__dirname, args.schema);
-args.destination = __dirname;
+args.schema = path.join(__dirname, args.schema);
+args.destination = args.destination;
 
 const letzGetIt = async () => {
   await makeConfig(args);
   await makeConnection(args);
   await makeSchema(args);
   await makeModelIndex(args);
+  await makeAPI(args);
+  await makeSwaggerModelDefinitions(args);
   if (args.logging) console.log('all done 🚀');
-}
+};
 
 letzGetIt();

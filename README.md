@@ -1,10 +1,13 @@
-# Generators 
+# Generators
 
-rm -rf connection models configs && \
-nodemon --ignore models/ \
---ignore connection/ \
---ignore configs/ \
-index.js \
+
+
+## Generate api endpoint
+
+```
+nodemon index.js \
 --type api \
 --name user \
---schema ./samples/user.json
+--schema ./samples/user.json \
+--destination /var/andrew/generator
+```

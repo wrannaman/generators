@@ -9,7 +9,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   if (logging) console.log('making schema ', schema);
 
   if (!fs.existsSync(modelFolder)) {
-    if (logging) console.log('creating folder ', modelFolder);
+    if (logging) console.log('creating models/');
     fs.mkdirSync(modelFolder);
   }
 
@@ -17,8 +17,7 @@ module.exports = ({ schema, logging, destination, name }) => {
     "const database = require('../connection/mongo');",
     "const { Schema } = require('mongoose');",
     "const mongoosePaginate = require('mongoose-paginate-v2');",
-    `// Schema`,
-    `const schema = new Schema({`
+    "const schema = new Schema({",
   ];
 
   // format the model
@@ -35,13 +34,13 @@ module.exports = ({ schema, logging, destination, name }) => {
   });
   // add timestamps
   code.push(`},
-{
-  timestamps: true
-});`);
+  {
+    timestamps: true
+  });`);
   // assign statics
   const statics = []
   Object.keys(schema.statics).forEach(key => {
-    statics.push(`schema.statics.${key} = ${JSON.stringify(schema.statics[key])};`)
+    statics.push(`schema.statics.${key} = ${JSON.stringify(schema.statics[key])};`);
   });
   statics.forEach((static) => code.push(`${static}`))
 
