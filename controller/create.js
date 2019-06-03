@@ -11,8 +11,10 @@ module.exports = ({ schema, logging, destination, name }) => {
   let code = [];
   const top = [
     sugarGenerated(),
-    `const ${uppercase(name)} = require("../../models/${name}.js");`
-  ]
+    `const ${uppercase(name)} = require("../../models/${name}.js");`,
+    `const { userCanApiKey } = require('../../configs/config');`,
+    `const userCan = require('user-can')(userCanApiKey);`,
+  ];
 
   const swagger = [
     "/*",
@@ -54,6 +56,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   const permissions = [
     ``,
     `// @TODO Permissions`,
+    `const permission = userCan(req.user._id, 'create', 'user');`,
     ``
   ];
   const save = [

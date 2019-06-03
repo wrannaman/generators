@@ -14,5 +14,6 @@ module.exports = {
     username: "sugar",
     password: "kubes"
   },
-  env: "local"
+  env: "local",
+  userCanApiKey: "123456",
 };
