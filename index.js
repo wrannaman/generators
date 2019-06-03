@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-
+const fs = require('fs');
 const path = require('path');
 const { ArgumentParser } = require('argparse');
+const mkdirp = require('mkdirp');
 
 const {
   makeSchema,
@@ -10,9 +11,15 @@ const {
   makeSwaggerModelDefinitions,
 } = require('./utils');
 
-
 const { makeRouter } = require('./router');
-const { serverIndex, userCan, dockerFile, writePackageJSON, writeEslint } = require('./server');
+const {
+  serverIndex,
+  userCan,
+  dockerFile,
+  writePackageJSON,
+  writeEslint,
+  readme
+} = require('./server');
 const {
   makeConnection,
 } = require('./mongodb');
@@ -83,6 +90,7 @@ args.schema = path.join(__dirname, args.schema);
 args.destination = args.destination;
 
 const letzGetIt = async () => {
+  if (!fs.existsSync(args.destination)) mkdirp.sync(args.destination);
   await makeConfig(args);
   await makeConnection(args);
   await makeSchema(args);
@@ -95,6 +103,7 @@ const letzGetIt = async () => {
   await dockerFile(args);
   await writePackageJSON(args);
   await writeEslint(args);
+  await readme(args);
   if (args.logging) console.log('all done 🚀');
 };
 

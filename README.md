@@ -1,6 +1,6 @@
-# Generators
+# Instantly Generate OAS 3.0 compliant APIs
 
-
+![Sugar Generator - API Edition](./logo.png)
 
 ## Generate api endpoint
 
