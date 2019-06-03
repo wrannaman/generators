@@ -108,7 +108,6 @@ nodemon index.js \
 
 - meant to be as minimal and straight-forward as possible
 
-
     .
     ├── configs                 # config file
     ├── connection              # db connections (mongo, redis)
