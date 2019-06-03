@@ -6,10 +6,10 @@ module.exports = ({ schema, logging, destination, name }) => {
   const modelFolder = `${destination}/models`;
   const modelFile = `${modelFolder}/${name}.js`;
   const indexFile = `${modelFolder}/index.js`;
-  if (logging) console.log('making schema ', schema);
+  // if (logging) console.log('making schema ', schema);
 
   if (!fs.existsSync(modelFolder)) {
-    if (logging) console.log('creating models/');
+    // if (logging) console.log('creating models/');
     fs.mkdirSync(modelFolder);
   }
 
@@ -38,15 +38,15 @@ module.exports = ({ schema, logging, destination, name }) => {
     timestamps: true
   });`);
   // assign statics
-  const statics = []
+  const statics = [];
   Object.keys(schema.statics).forEach(key => {
     statics.push(`schema.statics.${key} = ${JSON.stringify(schema.statics[key])};`);
   });
-  statics.forEach((static) => code.push(`${static}`))
+  statics.forEach((_static) => code.push(`${_static}`));
 
   // button up
-  code.push(`schema.plugin(mongoosePaginate);`)
-  code.push(`module.exports = database.model("${name}", schema);`)
+  code.push(`schema.plugin(mongoosePaginate);`);
+  code.push(`module.exports = database.model("${name}", schema);`);
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });
   fs.writeFileSync(modelFile, pretty);
-}
+};

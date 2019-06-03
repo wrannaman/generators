@@ -2,7 +2,7 @@ const fs = require('fs');
 const beautify = require('js-beautify').js;
 
 module.exports = ({ schema, logging, destination, name }) => {
-  if (logging) console.log(`API => CRUD => GET ${name}`);
+  if (logging) console.log(`API => CRUD => INDEX ${name}`);
   const { uppercase } = require('../utils');
   schema = require(schema); // eslint-disable-line
   const controllerSubFolder = `${destination}/controller/${name}`;

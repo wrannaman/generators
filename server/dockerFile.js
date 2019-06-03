@@ -6,7 +6,7 @@ module.exports = ({ destination, logging }) => {
   const dockerFile = `${modelFolder}/Dockerfile`;
   const dockerIgnore = `${modelFolder}/.dockerignore`;
 
-  if (logging) console.log('checking Dockerfile');
+  // if (logging) console.log('checking Dockerfile');
 
   const code = `
 FROM node:alpine

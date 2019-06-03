@@ -19,6 +19,6 @@ module.exports = ({ schema, logging, destination, name }) => {
 `;
   const code = [top];
   code.push(schemaDefinition({ schema, name }));
-  if (logging) console.log('make swagger model definitions ');
+  // if (logging) console.log('make swagger model definitions ');
   fs.writeFileSync(swaggerFile, code.join('\n'));
 };

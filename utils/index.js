@@ -9,4 +9,5 @@ module.exports = {
   createUpdateCode: require('./createUpdateCode'),
   sugarGenerated: require('./sugarGenerated'),
   extraParams: require('./extraParams'),
+  validateSchema: require('./validateSchema'),
 };

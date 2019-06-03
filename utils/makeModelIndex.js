@@ -6,7 +6,7 @@ const { modelIndex } = require('../mongodb');
 module.exports = ({ schema, logging, destination }) => {
   const modelFolder = `${destination}/models`;
   const indexFile = `${destination}/models/index.js`;
-  if (logging) console.log('updating models/index.js ');
+  // if (logging) console.log('updating models/index.js ');
   let items = fs.readdirSync(modelFolder);
   items = items.map((item) => item.replace('.js', ''));
   items = items.filter(item => item !== 'index');

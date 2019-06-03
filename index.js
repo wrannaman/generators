@@ -9,6 +9,7 @@ const {
   makeConfig,
   makeModelIndex,
   makeSwaggerModelDefinitions,
+  validateSchema,
 } = require('./utils');
 
 const { makeRouter } = require('./router');
@@ -90,7 +91,6 @@ args.schema = path.join(__dirname, args.schema);
 args.destination = args.destination;
 
 const letzGetIt = async () => {
-  if (!fs.existsSync(args.schema)) return console.error(`Oi! Your schema doesn't exist 😖. \n\t  ${args.schema}`);
   if (!fs.existsSync(args.destination)) mkdirp.sync(args.destination);
   await makeConfig(args);
   await makeConnection(args);
@@ -108,4 +108,10 @@ const letzGetIt = async () => {
   if (args.logging) console.log('all done 🚀');
 };
 
-letzGetIt();
+const validSchema = validateSchema(args.schema);
+
+if (validSchema) {
+  letzGetIt();
+} else {
+  console.error('Error => invalid schema.');
+}

@@ -8,17 +8,17 @@ module.exports = ({ schema, logging, destination, name }) => {
   const remove = require('./delete');
   const indexFile = require('./indexFile');
 
-  if (logging) console.log('***** API *****');
+  // if (logging) console.log('***** API *****');
 
   const controllerFolder = `${destination}/controller`;
   const controllerSubFolder = `${destination}/controller/${name}`;
 
   if (!fs.existsSync(controllerFolder)) {
-    if (logging) console.log('creating dir controller ');
+    // if (logging) console.log('creating dir controller ');
     fs.mkdirSync(controllerFolder);
   }
   if (!fs.existsSync(controllerSubFolder)) {
-    if (logging) console.log('creating dir named controller ');
+    // if (logging) console.log('creating dir named controller ');
     fs.mkdirSync(controllerSubFolder);
   }
 

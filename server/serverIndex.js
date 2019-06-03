@@ -5,7 +5,7 @@ module.exports = ({ destination, logging, }) => {
   const modelFolder = `${destination}`;
   const indexFile = `${modelFolder}/index.js`;
 
-  if (logging) console.log('checking server index ');
+  // if (logging) console.log('checking server index ');
 
   const code = [];
   code.push(`
@@ -35,7 +35,7 @@ module.exports = ({ destination, logging, }) => {
   code.push('app.get("/index.html", (req, res) => res.send(indexContent));');
   code.push("app.use(express.static(abs));");
   code.push("app.listen(port, () => console.log(\`SugarKubes API: \${port}!\`)); // eslint-disable-line"); // eslint-disable-line
-  if (logging) console.log('creating server entrypoint');
+  // if (logging) console.log('creating server entrypoint');
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });
 
   fs.writeFileSync(indexFile, pretty);
