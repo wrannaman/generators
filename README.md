@@ -39,12 +39,16 @@
 
 # How It Works
 
-1. Feed it a json (see below's [Example Schema](#Example-Schema))
+1. Feed it a json schema (see below's [Example Schema](#Example-Schema))
+2. Name it
+3. Tell it where to put the code.
+4. Build your generated code with the docker file
+5. Deploy it and move on
 
 ## Generate api endpoint
 
 ```sh
-nodemon index.js \
+node index.js \
 --type api \
 --name user \
 --schema ./samples/user.json \
