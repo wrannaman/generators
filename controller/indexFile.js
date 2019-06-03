@@ -13,7 +13,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   const get${uppercase(name)} = require('./get');
   const getOne${uppercase(name)} = require('./getOne');
   const update${uppercase(name)} = require('./update');
-  const delete${uppercase(name)} = require('./delete');
+  const delete${uppercase(name)} = require('./delete${uppercase(name)}');
 
   module.exports = {
     create${uppercase(name)},

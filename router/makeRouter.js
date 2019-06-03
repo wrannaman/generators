@@ -4,7 +4,6 @@ module.exports = ({ schema, logging, destination, name }) => {
   const indexCode = require('./indexCode');
   const routerCode = require('./routerCode');
   schema = require(schema); // eslint-disable-line
-  console.log('SCHEMA', schema)
   const modelFolder = `${destination}/router`;
   const routerFile = `${modelFolder}/${name}.js`;
   const indexFile = `${modelFolder}/index.js`;
