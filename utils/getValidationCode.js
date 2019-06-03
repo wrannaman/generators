@@ -1,7 +1,8 @@
 const uppercase = require('./uppercase');
 const { safeType, safeDefault } = require('../swagger');
 
-module.exports = (schema, name, extras = {}) => {
+module.exports = (schema) => {
+  const extras = require('./extraParams');
   const code = [`// Validation`];
 
   // pagination, etc.

@@ -3,6 +3,7 @@ const fs = require('fs');
 module.exports = ({ schema, logging, destination, name }) => {
   const create = require('./create');
   const get = require('./get');
+  const getOne = require('./getOne');
   const update = require('./update');
   const remove = require('./delete');
   const indexFile = require('./indexFile');

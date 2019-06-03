@@ -2,6 +2,7 @@ const fs = require('fs');
 const beautify = require('js-beautify').js;
 
 module.exports = ({ schema, logging, destination, name }) => {
+  const action = 'create';
   const { uppercase, createValidationCode, sugarGenerated } = require('../utils');
   if (logging) console.log(`API => CRUD => CREATE ${name}`);
   schema = require(schema); // eslint-disable-line
@@ -54,8 +55,8 @@ module.exports = ({ schema, logging, destination, name }) => {
   const permissions = [
     ``,
     `// @TODO Permissions`,
-    `const permission = userCan(req.user._id, 'create', 'user');`,
-    `if (!permission) throw new Error('Permission denied for userCan create user')`,
+    `const permission = userCan('${action}', '${name}', req.user, req.body, req.query, req.params);`,
+    `if (!permission) throw new Error('Permission denied for userCan ${action} ${name}');`,
     ``
   ];
   const safeArea = [

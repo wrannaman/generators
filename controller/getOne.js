@@ -2,11 +2,12 @@ const fs = require('fs');
 const beautify = require('js-beautify').js;
 
 module.exports = ({ schema, logging, destination, name }) => {
-  const { uppercase, createUpdateCode, sugarGenerated } = require('../utils');
-  if (logging) console.log(`API => CRUD => UPDATE ${name}`);
+  const action = 'getOne';
+  const { uppercase, sugarGenerated } = require('../utils');
+  if (logging) console.log(`API => CRUD => GETONE ${name}`);
   schema = require(schema); // eslint-disable-line
   const controllerSubFolder = `${destination}/controller/${name}`;
-  const createFile = `${controllerSubFolder}/update.js`;
+  const createFile = `${controllerSubFolder}/getOne.js`;
 
   let code = [];
   const top = [
@@ -18,8 +19,8 @@ module.exports = ({ schema, logging, destination, name }) => {
 
   const swagger = [
     "/*",
-    `* @oas [put] /${name}/:id`,
-    `* summary: "update a ${name}"`,
+    `* @oas [get] /${name}/:id`,
+    `* summary: "get one ${name}"`,
     `* tags: ["${name}"]`,
     `* parameters:`,
     `*   - name: 'id'`,
@@ -28,26 +29,16 @@ module.exports = ({ schema, logging, destination, name }) => {
     `*     schema:`,
     `*       type: 'string'`,
     `*       example: "123456"`,
-    `* requestBody:`,
-    `*   description: ${uppercase(name)} - **Update** `,
-    `*   required: true`,
-    `*   content:`,
-    `*     application/json:`,
-    `*       schema:`,
-    `*        $ref: '#/components/schemas/${uppercase(name)}'`,
     `* responses:`,
     `*   "200":`,
-    `*     description: "update a ${name}"`,
+    `*     description: "get one ${name}"`,
     `*     schema:`,
     `*       type: "${uppercase(name)}"`,
     "*/",
   ];
-  const schemaKeys = Object.keys(schema.schema);
-  const validate = createUpdateCode(schema.schema, name);
   const func = [
     `module.exports = async (req, res) => {`,
     `  try {`,
-    `    const { ${schemaKeys.join(', ')}} = req.body;`,
     `    const { id } = req.params;`,
     `    const existing${uppercase(name)} = await ${uppercase(name)}.findOne({ _id: id });`,
     `    if (!existing${uppercase(name)}) throw new Error('${name} not found.');`,
@@ -55,7 +46,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   const end = [
     `    `,
     `  } catch (e) {`,
-    `    console.error('Create => ${name}', e);`,
+    `    console.error('GetOne => ${name}', e);`,
     `    return res.status(500).json({ error: e.message ? e.message : e });`,
     `  }`,
     `};`,
@@ -63,8 +54,8 @@ module.exports = ({ schema, logging, destination, name }) => {
   const permissions = [
     ``,
     `// @TODO Permissions`,
-    `const permission = userCan(req.user._id, 'update', 'user');`,
-    `if (!permission) throw new Error('Permission denied for userCan create user')`,
+    `const permission = userCan('${action}', '${name}', req.user, req.body, req.query, req.params);`,
+    `if (!permission) throw new Error('Permission denied for userCan ${action} ${name}');`,
     ``
   ];
   const safeArea = [
@@ -75,11 +66,9 @@ module.exports = ({ schema, logging, destination, name }) => {
     ``
   ];
   const save = [
-    `// save`,
-    `const updated = await existing${uppercase(name)}.save();`,
-    `return res.json({ ${name}: updated });`
+    `return res.json({ ${name}: existing${uppercase(name)} });`
   ];
-  code = code.concat(top, swagger, func, validate, permissions, safeArea, save, end);
+  code = code.concat(top, swagger, func, permissions, safeArea, save, end);
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });
   fs.writeFileSync(createFile, pretty);
 };
