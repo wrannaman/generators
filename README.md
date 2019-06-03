@@ -1,21 +1,27 @@
-# Instantly Generate OAS 3.0 compliant APIs
+# Instantly Generate OAS 3.0 compliant APIs 🔥
 
 ![Sugar Generator - API Edition](./logo.png)
 
 
-## Features
-
-- uses mongodb with mongoose ORM
-- support search, sort, filter, pagination out of the box
+## Features 🙉
+- Generates simple Nodejs code
+- Uses Mongodb with Mongoose ORM
+- Easy to build / deploy
+- Dockerfile included
 - Generates CRUD APIs
+  - create
+  - get (many, with pagination; supports search, sort, filter, pagination out of the box)
+  - getOne
+  - update
+  - delete
 
-## What it's good at
+## What it's good at 🙊
 
-- generating an initial API
-- microservice oriented
-- ready to deploy (build with docker => deploy)
+- Generating an initial API
+- Microservice oriented
+- Ready to deploy (build with docker => deploy)
 
-## What it's not good at (yet)
+## What it's not good at (yet) 🙈
 
 - idempotent changes (i.e. it doesn't know if you wrote code in there or changed things around)
 - working with modified code
@@ -28,6 +34,12 @@
 - tests for generated code
 - other databases?
 - **your ideas?**
+- react components for the api?!?!
+
+
+# How It Works
+
+1. Feed it a json (see below's [Example Schema](#Example-Schema))
 
 ## Generate api endpoint
 
