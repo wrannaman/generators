@@ -88,6 +88,7 @@ docker build -t myMonkeys:0.1.0 .
 - working with modified code
 - populating table joins
 - custom actions inside controller functions
+
 # How It Works
 
 1. Feed it a json schema (see below's [Example Schema](#Example-Schema))
@@ -95,9 +96,11 @@ docker build -t myMonkeys:0.1.0 .
 3. Tell it where to put the code.
 4. Build your generated code with the docker file
 5. Deploy it and move on
+
 ## TODO
 
-- generator tests
+- ~~basic generator tests~~
+- more tests on get
 - tests for generated code
 - other databases?
 - **your ideas?**
