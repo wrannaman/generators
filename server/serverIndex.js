@@ -1,12 +1,10 @@
 const fs = require('fs');
 const beautify = require('js-beautify').js;
 
-module.exports = ({ destination, logging, }) => {
+module.exports = ({ destination, logging, name }) => {
   const modelFolder = `${destination}`;
   const indexFile = `${modelFolder}/index.js`;
-
   // if (logging) console.log('checking server index ');
-
   const code = [];
   code.push(`
     const express = require('express');
@@ -28,6 +26,8 @@ module.exports = ({ destination, logging, }) => {
     });
     app.use('/health', (req, res) => res.status(200).json({ healthy: true, time: new Date().getTime() }));
 
+    // routes
+    app.use([ require('./router/${name}') ]);
   `);
   code.push('const indexContent = fs.readFileSync(`${abs}/index.html`).toString().replace("https://petstore.swagger.io/v2/swagger.json", `http://localhost:${port}/swagger.json`);'); // eslint-disable-line
   code.push("app.use('/swagger.json', express.static('./swagger.json'));");

@@ -3,7 +3,7 @@ const beautify = require('js-beautify').js;
 
 module.exports = ({ schema, logging, destination, name }) => {
   const action = 'get';
-  const { uppercase, getValidationCode, sugarGenerated, extraParams } = require('../utils');
+  const { uppercase, getValidationCode, sugarGenerated, extraParams, getSchemaQueryDefinitions } = require('../utils');
   if (logging) console.log(`API => CRUD => GET ${name}`);
   schema = require(schema); // eslint-disable-line
   const controllerSubFolder = `${destination}/controller/${name}`;
@@ -16,25 +16,54 @@ module.exports = ({ schema, logging, destination, name }) => {
     `const { userCanApiKey } = require('../../configs/config');`,
     `const userCan = require('../../user-can')(userCanApiKey);`,
   ];
-  const swagger = [
+  let swagger = [
     "/*",
     `* @oas [get] /${name}`,
     `* summary: "get ${name}s"`,
     `* tags: ["${name}"]`,
-    `* requestBody:`,
-    `*   description: ${uppercase(name)} - **GET** `,
-    `*   required: true`,
-    `*   content:`,
-    `*     application/json:`,
-    `*       schema:`,
-    `*        $ref: '#/components/schemas/Extended${uppercase(name)}'`,
+    `* parameters: `,
+    `*   - in: query`,
+    `*     name: page`,
+    `*     description: page`,
+    `*     schema:`,
+    `*       type: integer`,
+    `*   - in: query`,
+    `*     name: limit`,
+    `*     description: The numbers of items to return`,
+    `*     schema:`,
+    `*       type: integer`,
+    `*   - in: query`,
+    `*     name: sort`,
+    `*     style: deepObject`,
+    `*     description: object containing how to sort the items`,
+    `*     schema:`,
+    `*       type: object`,
+    `*       example: { "field": "asc", "test": -1, "field2": "desc" }`,
+    `*   - in: query`,
+    `*     name: select`,
+    `*     description: object containing fields want to be returned`,
+    `*     style: deepObject`,
+    `*     schema:`,
+    `*       type: object`,
+    `*       example: { "first_name": 1 }`,
+  ];
+
+  swagger = swagger.concat(getSchemaQueryDefinitions(schema.schema));
+  swagger = swagger.concat([
+    // `* requestBody:`,
+    // `*   description: ${uppercase(name)} - **GET** `,
+    // `*   required: true`,
+    // `*   content:`,
+    // `*     application/json:`,
+    // `*       schema:`,
+    // `*        $ref: '#/components/schemas/Extended${uppercase(name)}'`,
     `* responses:`,
     `*   "200":`,
     `*     description: "get ${name}s"`,
     `*     schema:`,
     `*       type: "${uppercase(name)}"`,
     "*/",
-  ];
+  ]);
   const schemaKeys = Object.keys(schema.schema);
   const paginateValidation = getValidationCode(schema.schema, name);
   const extraKeys = Object.keys(extraParams);
@@ -43,8 +72,9 @@ module.exports = ({ schema, logging, destination, name }) => {
   const func = [
     `module.exports = async (req, res) => {`,
     `  try {`,
-    `    let { ${extraKeys.join(', ')}} = req.query;`,
+    `    const { ${extraKeys.join(', ')}} = req.query;`,
     `    const { ${schemaKeys.join(', ')}} = req.query;`,
+    `    console.log('req query ', req.query);`,
     `    // The model query`,
     `    const find = {};`,
     `    // pagination object (search, sort, filter, etc)`,
@@ -74,8 +104,10 @@ module.exports = ({ schema, logging, destination, name }) => {
   ];
   const save = [
     `// save`,
-    `const users = await User.paginate(find, where); // @TODO populate: 'team'`,
-    `return res.json({ users });`
+    `console.log('find ', find);`,
+    `console.log('where', where);`,
+    `const ${name} = await ${uppercase(name)}.paginate(find, where); // @TODO populate: '<model name>'`,
+    `return res.json({ ${name} });`
   ];
   code = code.concat(top, swagger, func, paginateValidation, permissions, safeArea, save, end);
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });

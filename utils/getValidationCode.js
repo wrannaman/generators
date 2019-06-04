@@ -3,6 +3,7 @@ const { safeType, safeDefault } = require('../swagger');
 
 module.exports = (schema) => {
   const extras = require('./extraParams');
+  const returnValueBasedOnType = require('./returnValueBasedOnType');
   const code = [`// Validation`];
 
   // pagination, etc.
@@ -10,8 +11,8 @@ module.exports = (schema) => {
   if (extraKeys.length > 0) {
     code.push('// Pagination ');
     extraKeys.forEach(key => {
-      code.push(`if (typeof ${key} !== 'undefined' && \n typeof ${key} === "${safeType(extras[key].type).toLowerCase()}") {`);
-      code.push(`where.${key} = ${extras[key].type === 'number' ? `Number(${key})` : key};`);
+      code.push(`if (typeof ${key} !== 'undefined') {`);
+      code.push(`where.${key} = ${returnValueBasedOnType(extras[key].type, key)};`);
       if (typeof extras[key].default !== 'undefined') {
         code.push(`} else {`);
         code.push(` where.${key} = ${safeDefault(extras[key].default)};`);
@@ -21,12 +22,16 @@ module.exports = (schema) => {
       }
     });
   }
-  code.push(`where.limit = limit;`);
+  // code.push(`where.limit = limit;`);
   code.push(`where.offset = page * limit;`);
   code.push('// Model Validation ');
   Object.keys(schema).forEach(key => {
-    code.push(`if (typeof ${key} !== 'undefined' && \n typeof ${key} === "${safeType(schema[key].type).toLowerCase()}") {`);
-    code.push(`find.${key} = ${key};`);
+    code.push(`if (typeof ${key} !== 'undefined') {`);
+    code.push(` try {`);
+    code.push(`find.${key} = JSON.parse(${key})`);
+    code.push(` } catch (e) {`);
+    code.push(`find.${key} = ${returnValueBasedOnType(schema[key].type, key)};`);
+    code.push(`}`);
     code.push(`}`);
   });
   return code.join('\n');

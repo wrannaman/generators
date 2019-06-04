@@ -10,4 +10,5 @@ module.exports = {
   sugarGenerated: require('./sugarGenerated'),
   extraParams: require('./extraParams'),
   validateSchema: require('./validateSchema'),
+  getSchemaQueryDefinitions: require('./getSchemaQueryDefinitions'),
 };

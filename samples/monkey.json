@@ -7,6 +7,14 @@
     "last_name": {
       "type": "String",
       "default": ""
+    },
+    "isDead": {
+      "type": "Boolean",
+      "default": false
+    },
+    "age": {
+      "type": "Number",
+      "default": false
     }
   },
   "statics": {

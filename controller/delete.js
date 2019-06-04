@@ -19,12 +19,12 @@ module.exports = ({ schema, logging, destination, name }) => {
 
   const swagger = [
     "/*",
-    `* @oas [delete] /${name}/:id`,
+    `* @oas [delete] /${name}/{id}`,
     `* summary: "delete a ${name}"`,
     `* tags: ["${name}"]`,
     `* parameters:`,
     `*   - name: 'id'`,
-    `*     in: 'url'`,
+    `*     in: 'path'`,
     `*     description: id of the ${name}`,
     `*     schema:`,
     `*       type: 'string'`,
@@ -41,7 +41,6 @@ module.exports = ({ schema, logging, destination, name }) => {
   const func = [
     `module.exports = async (req, res) => {`,
     `  try {`,
-    `    const { ${schemaKeys.join(', ')}} = req.body;`,
     `    const { id } = req.params;`,
     `    const existing${uppercase(name)} = await ${uppercase(name)}.findOne({ _id: id });`,
     `    if (!existing${uppercase(name)}) throw new Error('${name} not found.');`,
@@ -70,7 +69,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   ];
   const save = [
     `// save`,
-    `const updated = await existing${uppercase(name)}.save();`,
+    `const updated = await existing${uppercase(name)}.delete()`,
     `return res.json({ ${name}: updated });`
   ];
   code = code.concat(top, swagger, func, validate, permissions, safeArea, save, end);

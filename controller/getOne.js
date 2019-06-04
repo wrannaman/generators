@@ -19,12 +19,12 @@ module.exports = ({ schema, logging, destination, name }) => {
 
   const swagger = [
     "/*",
-    `* @oas [get] /${name}/:id`,
+    `* @oas [get] /${name}/{id}`,
     `* summary: "get one ${name}"`,
     `* tags: ["${name}"]`,
     `* parameters:`,
     `*   - name: 'id'`,
-    `*     in: 'url'`,
+    `*     in: 'path'`,
     `*     description: id of the ${name}`,
     `*     schema:`,
     `*       type: 'string'`,

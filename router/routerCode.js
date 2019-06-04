@@ -6,13 +6,19 @@ module.exports = ({ name }) => {
   const code = `
   const express = require('express');
   const router = express.Router();
-  const { create, delete${uppercase(name)}, get, getOne, update } = require('../controller/${name}');
+  const {
+    create${uppercase(name)},
+    delete${uppercase(name)},
+    get${uppercase(name)},
+    getOne${uppercase(name)},
+    update${uppercase(name)}
+  } = require('../controller/${name}');
 
-  router.get('/${name}/:id', getOne);
-  router.get('/${name}', get);
-  router.post('/${name}', create);
-  router.put('/${name}', update);
-  router.delete('/${name}', delete${uppercase(name)});
+  router.get('/${name}/:id', getOne${uppercase(name)});
+  router.get('/${name}', get${uppercase(name)});
+  router.post('/${name}', create${uppercase(name)});
+  router.put('/${name}/:id', update${uppercase(name)});
+  router.delete('/${name}/:id', delete${uppercase(name)});
 
   module.exports = router;
 
