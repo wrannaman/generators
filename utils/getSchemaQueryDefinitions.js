@@ -1,6 +1,5 @@
 module.exports = (schema) => {
   const { safeType } = require('../swagger');
-  console.log('get schema query def SCHEMA', schema);
   const code = [];
   Object.keys(schema).forEach(key => {
     code.push(`*   - in: query`);

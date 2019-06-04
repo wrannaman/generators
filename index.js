@@ -24,6 +24,9 @@ const {
 const {
   makeConnection,
 } = require('./mongodb');
+const {
+  makeTests
+} = require('./tests');
 
 const { makeAPI } = require('./controller');
 
@@ -105,6 +108,7 @@ const letzGetIt = async () => {
   await writePackageJSON(args);
   await writeEslint(args);
   await readme(args);
+  await makeTests(args);
   if (args.logging) console.log('all done 🚀');
 };
 

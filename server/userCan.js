@@ -14,7 +14,7 @@ module.exports = ({ destination, logging, }) => {
   const code = [];
   code.push(`
     module.exports = (apiKey) => (params) => {
-      console.log('user can ', params);
+      // console.log('user can ', params);
 
       // @TODO make api call to userCan.sugarkubes.io and of course build the service.
 

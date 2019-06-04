@@ -7,7 +7,7 @@
     "start": "PORT=${PORT} NODE_ENV=production node index.js",
     "dev": "nodemon --exec npm run dev-action --ignore swagger.json --ignore swagger.yaml",
     "dev-action": "npm run docs && node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --timeout 10000",
     "docs": "swagger-inline './controller/*/*.js' './models/*.js' --base './swaggerBase.yaml' --out swagger.json"
   },
   "author": "",

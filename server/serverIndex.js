@@ -20,10 +20,10 @@ module.exports = ({ destination, logging, name }) => {
     const jsonParser = bodyParser.json();
     app.use(cors());
     app.use(jsonParser);
-    app.use((req, res, next) => {
-      console.log(\`\${req.method} \${req.url}\`);
-      return next();
-    });
+    // app.use((req, res, next) => {
+    //   console.log(\`\${req.method} \${req.url}\`);
+    //   return next();
+    // });
     app.use('/health', (req, res) => res.status(200).json({ healthy: true, time: new Date().getTime() }));
 
     // routes
@@ -35,6 +35,7 @@ module.exports = ({ destination, logging, name }) => {
   code.push('app.get("/index.html", (req, res) => res.send(indexContent));');
   code.push("app.use(express.static(abs));");
   code.push("app.listen(port, () => console.log(\`SugarKubes API: \${port}!\`)); // eslint-disable-line"); // eslint-disable-line
+  code.push("module.exports = app; // for testing");
   // if (logging) console.log('creating server entrypoint');
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });
 

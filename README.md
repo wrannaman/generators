@@ -45,7 +45,7 @@ save this to **monkey.json**
 ```sh
 sugar-generator \
 --type api \
---name user \
+--name monkey \
 --schema monkey.json \
 --destination /wrannaman/generator
 ```
@@ -177,3 +177,9 @@ docker build -t myMonkeys:0.1.0 .
     ├── models                  # db models
     ├── router                  # endpoint routes
     ├── tests                   # @TODO
+
+## Generated tests
+
+```sh
+npm run test
+```
