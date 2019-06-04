@@ -3,6 +3,67 @@
 ![Sugar Generator - API Edition](./logo.png)
 
 
+## Install
+
+```sh
+npm i -g sugar-generator
+```
+
+## Prereqs
+
+- have mongodb [installed and running](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)!
+
+- have nodejs installed
+
+## Getting Started
+
+1. Create your schema. It could be as simple as:
+
+```json
+{
+  "schema": {
+    "name": {
+      "type": "String",
+      "default": ""
+    },
+    "isDead": {
+      "type": "Boolean",
+      "default": false
+    },
+    "age": {
+      "type": "Number",
+      "default": false
+    }
+  },
+  "statics": {}
+}
+```
+save this to **monkey.json**
+
+2. generate your api
+
+```sh
+sugar-generator \
+--type api \
+--name user \
+--schema monkey.json \
+--destination /wrannaman/generator
+```
+
+3. Run or build the docker container and visit [http://localhost:3000](http://localhost:3000)
+
+```sh
+cd /wrannaman/generator
+npm i
+npm start
+# Or build the docker container!
+docker build -t myMonkeys:0.1.0 .
+```
+
+![running](./start.png)
+![oas docs](./monkey.png)
+
+
 ## Features 🙉
 - Generates simple Nodejs code
 - Uses Mongodb with Mongoose ORM
@@ -27,16 +88,6 @@
 - working with modified code
 - populating table joins
 - custom actions inside controller functions
-
-## TODO
-
-- generator tests
-- tests for generated code
-- other databases?
-- **your ideas?**
-- react components for the api?!?!
-
-
 # How It Works
 
 1. Feed it a json schema (see below's [Example Schema](#Example-Schema))
@@ -44,17 +95,13 @@
 3. Tell it where to put the code.
 4. Build your generated code with the docker file
 5. Deploy it and move on
+## TODO
 
-## Generate api endpoint
-
-```sh
-node index.js \
---type api \
---name user \
---schema ./samples/user.json \
---destination /wrannaman/generator
-```
-
+- generator tests
+- tests for generated code
+- other databases?
+- **your ideas?**
+- react components for the api?!?!
 
 ## Example Schema
 

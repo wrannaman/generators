@@ -2,12 +2,13 @@ const fs = require('fs');
 const { schemaDefinition } = require('../swagger');
 
 module.exports = ({ schema, logging, destination, name }) => {
+  const uppercase = require('./uppercase');
   const swaggerFile = `${destination}/swagger.yaml`;
   const top = `
   openapi: 3.0.0
   info:
-    title: Generated API
-    description: ap generated api
+    title: ${uppercase(name)} API
+    description: Generated API for ${uppercase(name)} model
     version: 0.0.1
   servers:
     - url: http://localhost:3000
