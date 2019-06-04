@@ -1,6 +1,6 @@
 # Instantly Generate OAS 3.0 compliant APIs 🔥
 
-![Sugar Generator - API Edition](./logo.png)
+![Sugar Generator - API Edition](https://github.com/sugarkubes/generators/blob/master/logo.png?raw=true)
 
 
 ## Install
@@ -12,7 +12,6 @@ npm i -g sugar-generate
 ## Prereqs
 
 - have mongodb [installed and running](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)!
-
 - have nodejs installed
 
 ## Getting Started
@@ -60,8 +59,8 @@ npm start
 docker build -t myMonkeys:0.1.0 .
 ```
 
-![running](./start.png)
-![oas docs](./monkey.png)
+![running](https://github.com/sugarkubes/generators/blob/master/start.png?raw=true)
+![oas docs](https://github.com/sugarkubes/generators/blob/master/monkey.png?raw=true)
 
 
 ## Features 🙉

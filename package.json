@@ -3,7 +3,7 @@
   "version": "0.0.3",
   "description": "Auto generate OAS 3.0 APIs (Node + MongoDB)",
   "main": "index.js",
-  "os" : [ "!win32" ],
+  "os": [ "!win32" ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
