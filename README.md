@@ -6,7 +6,7 @@
 ## Install
 
 ```sh
-npm i -g sugar-generator
+npm i -g sugar-generate
 ```
 
 ## Prereqs
@@ -43,11 +43,11 @@ save this to **monkey.json**
 2. generate your api
 
 ```sh
-sugar-generator \
+sugar-generate \
 --type api \
 --name monkey \
---schema monkey.json \
---destination /wrannaman/generator
+--schema ./samples/monkey.json \
+--destination /private/var/andrew/generator-tests/3
 ```
 
 3. Run or build the docker container and visit [http://localhost:3000](http://localhost:3000)
