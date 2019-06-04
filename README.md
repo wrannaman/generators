@@ -173,13 +173,13 @@ docker build -t myMonkeys:0.1.0 .
 ## Generated project structure
 
     .
-    ├── configs                 # config file
-    ├── connection              # db connections (mongo, redis)
+    ├── configs                 # Config File
+    ├── connection              # DB Connections (mongo, redis)
     ├── controller              # Controllers
     │   ├── <model name>        # Functions (one file, one function) create, delete, update, get, getOne
-    ├── models                  # db models
-    ├── router                  # endpoint routes
-    ├── tests                   # @TODO
+    ├── models                  # DB Models
+    ├── router                  # Endpoint Routes
+    ├── tests                   # Single Test File
 
 ## Generated tests
 
