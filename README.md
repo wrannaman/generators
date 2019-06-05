@@ -182,6 +182,8 @@ docker build -t myMonkeys:0.1.0 .
 
 ## Generated tests
 
+** WARNING ** running the tests will pull the config file from **configs/config.json** and clear the DB
+
 ```sh
 npm run test
 ```

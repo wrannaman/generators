@@ -10,9 +10,9 @@ const {
   makeModelIndex,
   makeSwaggerModelDefinitions,
   validateSchema,
-} = require('./utils');
+} = require('./api/utils');
 
-const { makeRouter } = require('./router');
+const { makeRouter } = require('./api/router');
 const {
   serverIndex,
   userCan,
@@ -20,15 +20,15 @@ const {
   writePackageJSON,
   writeEslint,
   readme
-} = require('./server');
+} = require('./api/server');
 const {
   makeConnection,
-} = require('./mongodb');
+} = require('./api/mongodb');
 const {
   makeTests
-} = require('./tests');
+} = require('./api/tests');
 
-const { makeAPI } = require('./controller');
+const { makeAPI } = require('./api/controller');
 
 const parser = new ArgumentParser({
   version: '0.0.1',
