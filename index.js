@@ -96,7 +96,11 @@ args.schema = path.join(__dirname, args.schema);
 args.destination = args.destination;
 
 const letzGetIt = async () => {
-  if (!fs.existsSync(args.destination)) mkdirp.sync(args.destination);
+  if (!fs.existsSync(args.destination)) {
+    mkdirp.sync(args.destination);
+  } else if (process.env.NODE_ENV !== 'dev') {
+     return console.log(`uh oh, looks like there's something already at ${args.destination}`); // eslint-disable-line
+  }
   await makeConfig(args);
   await makeConnection(args);
   await makeSchema(args);
@@ -113,7 +117,7 @@ const letzGetIt = async () => {
   await writeDockerIgnore(args);
   await readme(args);
   await makeTests(args);
-  if (args.logging) console.log('all done 🚀');
+  if (args.logging) console.log('all done 🚀'); // eslint-disable-line
 };
 
 const validSchema = validateSchema(args.schema);
