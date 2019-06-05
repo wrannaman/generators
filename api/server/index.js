@@ -4,5 +4,7 @@ module.exports = {
   dockerFile: require('./dockerFile'),
   writePackageJSON: require('./writePackageJSON'),
   writeEslint: require('./writeEslint'),
+  writeDockerIgnore: require('./writeDockerIgnore'),
   readme: require('./readme'),
+  writeGitIgnore: require('./writeGitIgnore'),
 };

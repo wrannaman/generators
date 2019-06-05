@@ -19,6 +19,8 @@ const {
   dockerFile,
   writePackageJSON,
   writeEslint,
+  writeDockerIgnore,
+  writeGitIgnore,
   readme
 } = require('./api/server');
 const {
@@ -107,6 +109,8 @@ const letzGetIt = async () => {
   await dockerFile(args);
   await writePackageJSON(args);
   await writeEslint(args);
+  await writeGitIgnore(args);
+  await writeDockerIgnore(args);
   await readme(args);
   await makeTests(args);
   if (args.logging) console.log('all done 🚀');

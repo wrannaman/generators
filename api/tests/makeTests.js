@@ -16,6 +16,8 @@ module.exports = ({ schema, destination, logging, name }) => {
   const fake3 = fakeObject(schema);
   const { fake3A, changedKey } = randomPropertyChange(schema, fake3);
   const fake4 = fakeObject(schema);
+  const fake5 = fakeObject(schema);
+  const fake6 = fakeObject(schema);
 
   const code = `
   //During the test the env variable is set to test
@@ -44,15 +46,15 @@ module.exports = ({ schema, destination, logging, name }) => {
     describe('/GET ${name}', () => {
         it('it should GET all the ${name}s', (done) => {
           chai.request(server)
-              .get('/${name}')
+              .get('/${name}s')
               .end((err, res) => {
                     res.should.have.status(200);
                     console.log('res body', res.body);
-                    res.body.should.have.property('${name}');
-                    res.body.${name}.docs.length.should.be.eql(0);
-                    res.body.${name}.should.have.property('totalDocs');
-                    res.body.${name}.should.have.property('limit');
-                    res.body.${name}.should.have.property('offset');
+                    res.body.should.have.property('${name}s');
+                    res.body.${name}s.docs.length.should.be.eql(0);
+                    res.body.${name}s.should.have.property('totalDocs');
+                    res.body.${name}s.should.have.property('limit');
+                    res.body.${name}s.should.have.property('offset');
                 done();
               });
         });
@@ -116,6 +118,34 @@ module.exports = ({ schema, destination, logging, name }) => {
 
          });
      });
+
+     /*
+      * Test the /GET route
+      */
+      describe('/GET/ ${name}s', () => {
+          it('it should GET many ${name}s', (done) => {
+              const _fake5 = new ${name}(${JSON.stringify(fake5)});
+              _fake5.save((err, inner5) => {
+                const _fake6 = new ${name}(${JSON.stringify(fake6)});
+                _fake6.save((err, inner6) => {
+                    chai.request(server)
+                    .get('/${name}s')
+                    .end((err, res) => {
+                          res.should.have.status(200);
+                          res.body.should.be.a('object');
+                          res.body.${name}s.should.have.include.keys("docs", "totalDocs", "limit");
+                          res.body.${name}s.should.have.property('docs')
+                          res.body.${name}s.docs.should.be.a('array');
+                          res.body.${name}s.docs[0].should.have.include.keys("${Object.keys(fake1).join('","')}");
+                      done();
+                    });
+
+
+                  });
+              });
+
+          });
+      });
 
      /*
      * Test the /PUT/:id route

@@ -18,7 +18,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   ];
   let swagger = [
     "/*",
-    `* @oas [get] /${name}`,
+    `* @oas [get] /${name}s`,
     `* summary: "get ${name}s"`,
     `* tags: ["${name}"]`,
     `* parameters: `,
@@ -107,7 +107,7 @@ module.exports = ({ schema, logging, destination, name }) => {
     `console.log('find ', find);`,
     `console.log('where', where);`,
     `const ${name} = await ${uppercase(name)}.paginate(find, where); // @TODO populate: '<model name>'`,
-    `return res.json({ ${name} });`
+    `return res.json({ ${name}s: ${name} });`
   ];
   code = code.concat(top, swagger, func, paginateValidation, permissions, safeArea, save, end);
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });

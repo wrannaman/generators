@@ -4,6 +4,6 @@
 nodemon index.js \
 --type api \
 --name monkey \
---schema ./samples/monkey.json \
---destination /var/andrew/generator-tests/2
+--schema ./api/samples/monkey.json \
+--destination /var/andrew/generator-tests/7
 ```

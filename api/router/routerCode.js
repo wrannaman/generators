@@ -15,7 +15,7 @@ module.exports = ({ name }) => {
   } = require('../controller/${name}');
 
   router.get('/${name}/:id', getOne${uppercase(name)});
-  router.get('/${name}', get${uppercase(name)});
+  router.get('/${name}s', get${uppercase(name)});
   router.post('/${name}', create${uppercase(name)});
   router.put('/${name}/:id', update${uppercase(name)});
   router.delete('/${name}/:id', delete${uppercase(name)});
