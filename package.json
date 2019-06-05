@@ -1,12 +1,15 @@
 {
   "name": "sugar-generate",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "description": "Auto generate OAS 3.0 APIs (Node + MongoDB)",
-  "main": "index.js",
+  "main": "./index.js",
   "os": [ "!win32" ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "patch-release": "npm version patch && npm publish && git push --follow-tags"
+    "patch-release": "npm publish && git push --follow-tags"
+  },
+  "bin": {
+    "sugar-generate": "./index.js"
   },
   "keywords": [
     "sugar",
