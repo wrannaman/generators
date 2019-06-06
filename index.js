@@ -30,6 +30,10 @@ const {
   makeTests
 } = require('./api/tests');
 
+const {
+  makeGraphql
+} = require('./api/graphql');
+
 const { makeAPI } = require('./api/controller');
 
 const parser = new ArgumentParser({
@@ -46,6 +50,18 @@ parser.addArgument(
     required: true,
     metavar: "Generator Type",
     dest: "type"
+  }
+);
+
+parser.addArgument(
+  ['-f', '--flavor'],
+  {
+    help: 'one of ["graphql", "rest"]',
+    choices: ["rest", "graphql"],
+    required: false,
+    metavar: "flavor. do you want just rest or graphql + rest?",
+    dest: "flavor",
+    defaultValue: "graphql",
   }
 );
 
@@ -117,6 +133,9 @@ const letzGetIt = async () => {
   await writeDockerIgnore(args);
   await readme(args);
   await makeTests(args);
+  if (args.flavor === 'graphql') {
+    await makeGraphql(args);
+  }
   if (args.logging) console.log('all done 🚀'); // eslint-disable-line
 };
 

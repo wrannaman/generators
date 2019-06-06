@@ -1,11 +1,22 @@
 const fs = require('fs');
 const beautify = require('js-beautify').js;
 
-module.exports = ({ destination, logging, name }) => {
+module.exports = ({ destination, logging, name, flavor }) => {
   const modelFolder = `${destination}`;
   const indexFile = `${modelFolder}/index.js`;
   // if (logging) console.log('checking server index ');
   const code = [];
+  const graphql = `
+  // graphql
+  const graphqlHTTP = require('express-graphql');
+  const { makeExecutableSchema } = require('graphql-tools');
+  const { typeDefs, resolvers } = require('./graphql')
+  const schema = makeExecutableSchema({ typeDefs, resolvers });
+  app.use('/graphql', graphqlHTTP({
+    schema,
+    graphiql: true
+  }));
+  `
   code.push(`
     const express = require('express');
     const fs = require('fs');
@@ -20,6 +31,7 @@ module.exports = ({ destination, logging, name }) => {
     const jsonParser = bodyParser.json();
     app.use(cors());
     app.use(jsonParser);
+    ${flavor !== 'graphql' ? '' : graphql}
     // app.use((req, res, next) => {
     //   console.log(\`\${req.method} \${req.url}\`);
     //   return next();

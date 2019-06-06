@@ -169,6 +169,58 @@ docker build -t myMonkeys:0.1.0 .
 ```
 
 
+## Graphql support
+
+![Sugar Generate - Graphql](https://github.com/sugarkubes/generators/blob/master/graphql.png?raw=true)
+
+
+- graphql is supported and gets created by default so you
+can choose between rest and graphql
+
+graphql is located at [http://localhost:777/graphql](http://localhost:777/graphql)
+
+### Some example queries
+
+```graphql
+
+# create one
+mutation {
+  createMonkey(first_name:"hello", last_name:"world", age: 10) {
+    _id
+    first_name
+  }
+}
+
+# Update one of em
+mutation {
+  updateMonkey(monkeyID: "5cf8531632b58072f0376dab" first_name: "henry"){
+    _id
+    first_name
+  }
+}
+
+# Get em all
+query {
+  monkeys {
+    _id
+    first_name
+    age
+  }
+}
+
+# Get One
+query {
+  monkey(_id: "5cf852a71b11e870df383fb1") {
+    _id
+    first_name
+    age
+  }
+}
+
+# Delete One 
+
+```
+
 ## Generated project structure
 
     .
