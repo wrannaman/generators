@@ -5,6 +5,7 @@ const beautify = require('js-beautify').js;
 module.exports = ({ schema, destination, logging, name }) => {
   const { uppercase } = require('../utils');
   const fakeObject = require('./fakeObject');
+  const graphqlSafe = require('./graphqlSafe');
   const randomPropertyChange = require('./randomPropertyChange');
 
   const modelFolder = `${destination}/test`;
@@ -19,6 +20,24 @@ module.exports = ({ schema, destination, logging, name }) => {
   const fake5 = fakeObject(schema);
   const fake6 = fakeObject(schema);
 
+
+  const g1 = fakeObject(schema, true);
+  const g1fakeObject = g1.obj;
+  const g1fakeString = g1.str;
+
+  const g2 = fakeObject(schema, true);
+  const g2fakeObject = g2.obj;
+  const g2fakeString = g2.str;
+
+  const g3 = fakeObject(schema, true);
+  const g3fakeObject = g3.obj;
+  const g3fakeString = g3.str;
+
+  const gchanged = randomPropertyChange(schema, g3fakeObject);
+
+  const g3AfakeObject = gchanged.fake3A;
+  const gchangedKey = gchanged.changedKey;
+
   const code = `
   //During the test the env variable is set to test
   process.env.NODE_ENV = 'test';
@@ -28,18 +47,171 @@ module.exports = ({ schema, destination, logging, name }) => {
 
   const server = require('../index');
   const { ${name} } = require('../models');
-
   const should = chai.should();
-
-
   chai.use(chaiHttp);
-  //Our parent block
-  describe('${uppercase(name)}', () => {
-      beforeEach((done) => {
-          ${name}.deleteMany({}, (err) => {
-             done();
+
+
+  describe('GRAPHQL: ${uppercase(name)}', () => {
+    beforeEach((done) => {
+        [1].forEach(() => ${name}.create(${JSON.stringify(fakeObject(schema))}));
+        setTimeout(() => {
+          done()
+        }, 1000)
+    });
+
+
+      describe('query ${name}s', () => {
+          it('it should get all the ${name}s', (done) => {
+
+            chai.request(server)
+            .post('/graphql')
+            .send({ query:\`
+              query {
+                ${name}s {
+                  _id
+                  ${changedKey}
+                }
+              }
+            \` })
+            .end((err, res) => {
+                  const data = res.body.data;
+                  res.should.have.status(200);
+                  data.should.have.property('${name}s');
+                  data.${name}s.length.should.be.above(3);
+                  data.${name}s[0].should.have.property('${changedKey}');
+                  data.${name}s[0].should.have.property('_id');
+              done();
+            });
           });
       });
+
+      describe('mutation create${uppercase(name)}', () => {
+          it('it should create a ${name}', (done) => {
+
+            chai.request(server)
+            .post('/graphql')
+            .send({ query: \`
+              mutation {
+                createMonkey(${g1fakeString}) {
+                  _id
+                  first_name
+                  last_name
+                  isDead
+                }
+              }
+            \` })
+            .end((err, res) => {
+                  const data = res.body.data;
+                  res.should.have.status(200);
+                  data.should.have.property('create${uppercase(name)}');
+                  data.create${uppercase(name)}.should.have.property('first_name');
+                  data.create${uppercase(name)}.should.have.property('last_name');
+                  data.create${uppercase(name)}.should.have.property('isDead');
+                  data.create${uppercase(name)}.should.not.have.property('age');
+                  data.create${uppercase(name)}.first_name.should.eql('${g1fakeObject.first_name}');
+              done();
+            });
+          });
+      });
+
+
+      describe('query get one ${uppercase(name)}', () => {
+          it('it should create then get the created ${name}', (done) => {
+            chai.request(server)
+            .post('/graphql')
+            .send({ query: \`
+              mutation {
+                createMonkey(${g2fakeString}) {
+                  _id
+                }
+              }
+            \` })
+            .end((err, res) => {
+
+              const data = res.body.data;
+              res.should.have.status(200);
+              data.should.have.property('create${uppercase(name)}');
+              data.create${uppercase(name)}.should.have.property('_id');
+              const createdID = data.create${uppercase(name)}._id;
+              chai.request(server)
+              .post('/graphql')
+              .send({ query: \`
+                query {
+                  ${name}(_id: "\${createdID}") {
+                    _id
+                    ${changedKey}
+                  }
+                }
+              \`})
+              .end((err, res) => {
+                  const data = res.body.data;
+                  res.should.have.status(200);
+                  data.should.have.property('${name}');
+                  data.${name}.should.have.property('${changedKey}');
+                  data.${name}.should.have.property('_id');
+                  data.${name}._id.should.eql(createdID);
+                done();
+              });
+
+            });
+          });
+      });
+
+
+      describe('mutate ${uppercase(name)}', () => {
+          it('it should create then mutate ${name}', (done) => {
+
+            chai.request(server)
+            .post('/graphql')
+            .send({ query: \`
+              mutation {
+                create${uppercase(name)}(${g3fakeString}) {
+                  _id
+                }
+              }
+            \` })
+            .end((err, res) => {
+              const data = res.body.data;
+              res.should.have.status(200);
+              data.should.have.property('create${uppercase(name)}');
+              data.create${uppercase(name)}.should.have.property('_id');
+              const createdID = data.create${uppercase(name)}._id;
+
+              chai.request(server)
+              .post('/graphql')
+              .send({ query: \`
+                mutation {
+                  update${uppercase(name)}(_id: "\${createdID}", ${gchangedKey}: ${graphqlSafe(g3AfakeObject[gchangedKey])}) {
+                    _id
+                    ${gchangedKey}
+                  }
+                }
+              \`})
+              .end((err, res) => {
+                  const data = res.body.data;
+                  res.should.have.status(200);
+                  data.should.have.property('update${uppercase(name)}');
+                  data.update${uppercase(name)}.should.have.property('${gchangedKey}');
+                  data.update${uppercase(name)}.should.have.property('_id');
+                  // const changedString = String(data.update${uppercase(name)}.${gchangedKey})
+                  // changedString.should.eql("${fake3A[changedKey]}");
+                done();
+              });
+
+            });
+          });
+      });
+
+  });
+
+
+
+  describe('REST: ${uppercase(name)}', () => {
+    beforeEach((done) => {
+        ${name}.deleteMany({}, (err) => {
+          done()
+        });
+    });
   /*
     * Test the /GET route
     */
@@ -49,7 +221,6 @@ module.exports = ({ schema, destination, logging, name }) => {
               .get('/${name}s')
               .end((err, res) => {
                     res.should.have.status(200);
-                    console.log('res body', res.body);
                     res.body.should.have.property('${name}s');
                     res.body.${name}s.docs.length.should.be.eql(0);
                     res.body.${name}s.should.have.property('totalDocs');
@@ -91,7 +262,7 @@ module.exports = ({ schema, destination, logging, name }) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('${name}');
-                    res.body.${name}.should.have.include.keys("${Object.keys(fake1).join('","')}");
+                    res.body.${name}.should.include.keys("${Object.keys(fake1).join('","')}");
                 done();
               });
         });
@@ -139,11 +310,8 @@ module.exports = ({ schema, destination, logging, name }) => {
                           res.body.${name}s.docs[0].should.have.include.keys("${Object.keys(fake1).join('","')}");
                       done();
                     });
-
-
                   });
               });
-
           });
       });
 
@@ -161,8 +329,9 @@ module.exports = ({ schema, destination, logging, name }) => {
                          res.should.have.status(200);
                          res.body.should.be.a('object');
                          res.body.should.have.property('${name}')
-                         // res.body.should.have.property('message').eql('Book updated!');
-                         res.body.${name}.should.have.property('${changedKey}').eql("${fake3A[changedKey]}");
+
+                         const stringCheck = String(res.body.${name}.${changedKey})
+                         stringCheck.should.equal("${fake3A[changedKey]}");
                      done();
                    });
              });

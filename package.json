@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "patch-release": "npm publish && git push --follow-tags"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sugarkubes/generators"
+  },
   "bin": {
     "sugar-generate": "./index.js"
   },
@@ -29,7 +33,10 @@
     "openapi",
     "oas",
     "oasv3",
-    "oas 3.0"
+    "oas 3.0",
+    "rest",
+    "graphql",
+    "apollo",
   ],
   "author": "wrannaman",
   "license": "MIT",
