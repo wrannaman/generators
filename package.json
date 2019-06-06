@@ -1,7 +1,7 @@
 {
   "name": "sugar-generate",
   "version": "0.0.12",
-  "description": "Auto generate OAS 3.0 APIs (Node + MongoDB)",
+  "description": "Auto generate OAS 3.0 REST + GraphQL APIs (Node + MongoDB)",
   "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
