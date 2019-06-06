@@ -1,4 +1,4 @@
-# Instantly Generate OAS 3.0 compliant APIs 🔥
+# Instantly Generate Rest & GraphQL OAS 3.0 compliant APIs 🔥
 
 ![Sugar Generator - API Edition](https://github.com/sugarkubes/generators/blob/master/logo.png?raw=true)
 
@@ -217,7 +217,7 @@ query {
   }
 }
 
-# Delete One 
+# Delete One
 
 ```
 
