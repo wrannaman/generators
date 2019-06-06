@@ -32,6 +32,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.5.12",
+    "express-graphql": "^0.8.0",
     "graphql": "^14.3.1",
     "graphql-server-express": "^1.4.0",
     "graphql-tools": "^4.0.4",

@@ -7,6 +7,7 @@ module.exports = ({ schema, destination, logging, name }) => {
   const fakeObject = require('./fakeObject');
   const graphqlSafe = require('./graphqlSafe');
   const randomPropertyChange = require('./randomPropertyChange');
+  const { getGraphqlProperties } = require('../graphql');
 
   const modelFolder = `${destination}/test`;
   mkdirp.sync(modelFolder);
@@ -53,7 +54,12 @@ module.exports = ({ schema, destination, logging, name }) => {
 
   describe('GRAPHQL: ${uppercase(name)}', () => {
     beforeEach((done) => {
-        [1].forEach(() => ${name}.create(${JSON.stringify(fakeObject(schema))}));
+        ${name}.create(${JSON.stringify(fakeObject(schema))});
+        ${name}.create(${JSON.stringify(fakeObject(schema))});
+        ${name}.create(${JSON.stringify(fakeObject(schema))});
+        ${name}.create(${JSON.stringify(fakeObject(schema))});
+        ${name}.create(${JSON.stringify(fakeObject(schema))});
+
         setTimeout(() => {
           done()
         }, 1000)
@@ -87,28 +93,22 @@ module.exports = ({ schema, destination, logging, name }) => {
 
       describe('mutation create${uppercase(name)}', () => {
           it('it should create a ${name}', (done) => {
-
             chai.request(server)
             .post('/graphql')
             .send({ query: \`
               mutation {
-                createMonkey(${g1fakeString}) {
+                create${uppercase(name)}(${g1fakeString}) {
                   _id
-                  first_name
-                  last_name
-                  isDead
+                  ${getGraphqlProperties(schema, 'column', '\n\t\t\t')}
                 }
               }
             \` })
             .end((err, res) => {
                   const data = res.body.data;
+                  console.log('RES.BODY', res.body)
                   res.should.have.status(200);
                   data.should.have.property('create${uppercase(name)}');
-                  data.create${uppercase(name)}.should.have.property('first_name');
-                  data.create${uppercase(name)}.should.have.property('last_name');
-                  data.create${uppercase(name)}.should.have.property('isDead');
-                  data.create${uppercase(name)}.should.not.have.property('age');
-                  data.create${uppercase(name)}.first_name.should.eql('${g1fakeObject.first_name}');
+                  data.create${uppercase(name)}.${gchangedKey}.should.eql('${g1fakeObject[gchangedKey]}');
               done();
             });
           });
@@ -121,7 +121,7 @@ module.exports = ({ schema, destination, logging, name }) => {
             .post('/graphql')
             .send({ query: \`
               mutation {
-                createMonkey(${g2fakeString}) {
+                create${uppercase(name)}(${g2fakeString}) {
                   _id
                 }
               }

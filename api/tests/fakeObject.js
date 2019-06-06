@@ -9,10 +9,10 @@ module.exports = (schema, asString = false) => {
   if (!asString) return fakeObject;
 
   // into string
-  let str = [];
+  const str = [];
   Object.keys(fakeObject).forEach(key => {
     const value = schema[key].type === 'String' ? `"${fakeObject[key]}"` : fakeObject[key];
     str.push(`${key}: ${value}`);
   });
-  return { obj: fakeObject, str };
+  return { obj: fakeObject, str: str.join(', ') };
 };

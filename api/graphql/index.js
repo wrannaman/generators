@@ -4,4 +4,5 @@ module.exports = {
   createResolvers: require('./createResolvers'),
   createTypeDefs: require('./createTypeDefs'),
   getGraphqlSchema: require('./getGraphqlSchema'),
+  getGraphqlProperties: require('./getGraphqlProperties'),
 };
