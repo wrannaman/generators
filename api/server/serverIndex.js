@@ -1,5 +1,6 @@
 const fs = require('fs');
 const beautify = require('js-beautify').js;
+const { uppercase } = require('../utils');
 
 module.exports = ({ destination, logging, name, flavor }) => {
   const modelFolder = `${destination}`;
@@ -10,13 +11,47 @@ module.exports = ({ destination, logging, name, flavor }) => {
   // graphql
   const graphqlHTTP = require('express-graphql');
   const { makeExecutableSchema } = require('graphql-tools');
-  const { typeDefs, resolvers } = require('./graphql')
-  const schema = makeExecutableSchema({ typeDefs, resolvers });
+  // const { typeDefs, resolvers } = require('./graphql');
+  // const schema = makeExecutableSchema({ typeDefs, resolvers });
+  // app.use('/graphql', graphqlHTTP({
+  //   schema,
+  //   graphiql: true
+  // }));
+
+  const { composeWithMongoose } = require('graphql-compose-mongoose/node8');
+  const { schemaComposer } = require('graphql-compose');
+  const customizationOptions = {}; // left it empty for simplicity, described below
+  const ${uppercase(name)} = require('./models/${name}');
+  const ${uppercase(name)}TC = composeWithMongoose(${uppercase(name)}, customizationOptions);
+
+  schemaComposer.Query.addFields({
+    ${name}ById: UserTC.getResolver('findById'),
+    ${name}ByIds: UserTC.getResolver('findByIds'),
+    ${name}One: UserTC.getResolver('findOne'),
+    ${name}Many: UserTC.getResolver('findMany'),
+    ${name}Count: UserTC.getResolver('count'),
+    ${name}Connection: UserTC.getResolver('connection'),
+    ${name}Pagination: UserTC.getResolver('pagination'),
+  });
+
+  schemaComposer.Mutation.addFields({
+    ${name}CreateOne: UserTC.getResolver('createOne'),
+    ${name}CreateMany: UserTC.getResolver('createMany'),
+    ${name}UpdateById: UserTC.getResolver('updateById'),
+    ${name}UpdateOne: UserTC.getResolver('updateOne'),
+    ${name}UpdateMany: UserTC.getResolver('updateMany'),
+    ${name}RemoveById: UserTC.getResolver('removeById'),
+    ${name}RemoveOne: UserTC.getResolver('removeOne'),
+    ${name}RemoveMany: UserTC.getResolver('removeMany'),
+  });
+
+  const graphqlSchema = schemaComposer.buildSchema();
+
   app.use('/graphql', graphqlHTTP({
-    schema,
+    schema: graphqlSchema,
     graphiql: true
   }));
-  `
+  `;
   code.push(`
     const express = require('express');
     const fs = require('fs');

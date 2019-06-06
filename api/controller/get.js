@@ -74,7 +74,7 @@ module.exports = ({ schema, logging, destination, name }) => {
     `  try {`,
     `    const { ${extraKeys.join(', ')}} = req.query;`,
     `    const { ${schemaKeys.join(', ')}} = req.query;`,
-    `    console.log('req query ', req.query);`,
+    // `    console.log('req query ', req.query);`,
     `    // The model query`,
     `    const find = {};`,
     `    // pagination object (search, sort, filter, etc)`,
@@ -104,8 +104,8 @@ module.exports = ({ schema, logging, destination, name }) => {
   ];
   const save = [
     `// save`,
-    `console.log('find ', find);`,
-    `console.log('where', where);`,
+    // `console.log('find ', find);`,
+    // `console.log('where', where);`,
     `const ${name} = await ${uppercase(name)}.paginate(find, where); // @TODO populate: '<model name>'`,
     `return res.json({ ${name}s: ${name} });`
   ];

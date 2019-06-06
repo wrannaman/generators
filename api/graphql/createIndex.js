@@ -17,7 +17,6 @@ module.exports = ({ destination, flavor }) => {
     // if (logging) console.log('creating user-can');
     fs.mkdirSync(modelFolder);
   }
-  console.log('create index');
   const pretty = beautify(code, { indent_size: 2, space_in_empty_paren: true });
   fs.writeFileSync(indexFile, pretty);
 };

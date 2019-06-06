@@ -108,7 +108,7 @@ parser.addArgument(
 
 const args = parser.parseArgs();
 
-args.schema = path.join(__dirname, args.schema);
+args.schema = path.join(process.cwd(), args.schema);
 args.destination = args.destination;
 
 const letzGetIt = async () => {
@@ -133,9 +133,9 @@ const letzGetIt = async () => {
   await writeDockerIgnore(args);
   await readme(args);
   await makeTests(args);
-  if (args.flavor === 'graphql') {
-    await makeGraphql(args);
-  }
+  // if (args.flavor === 'graphql') {
+  //   await makeGraphql(args);
+  // }
   if (args.logging) console.log('all done 🚀'); // eslint-disable-line
 };
 
