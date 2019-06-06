@@ -2,7 +2,9 @@
 module.exports = (type, value, isEnum = false) => {
   const subDocHelper = require('./subDocHelper');
 
-  if (isEnum) return value[0];
+  if (isEnum) {
+    return isEnum[0];
+  }
   if (!type) {
     return subDocHelper(value);
   }

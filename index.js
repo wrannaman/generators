@@ -108,7 +108,7 @@ parser.addArgument(
 
 const args = parser.parseArgs();
 
-args.schema = path.join(__dirname, args.schema);
+args.schema = path.join(process.cwd(), args.schema);
 args.destination = args.destination;
 
 const letzGetIt = async () => {
