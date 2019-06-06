@@ -10,7 +10,7 @@ module.exports = ({ destination, logging, name, flavor }) => {
   const graphql = `
   // graphql
   const graphqlHTTP = require('express-graphql');
-  const { makeExecutableSchema } = require('graphql-tools');
+  // const { makeExecutableSchema } = require('graphql-tools');
   // const { typeDefs, resolvers } = require('./graphql');
   // const schema = makeExecutableSchema({ typeDefs, resolvers });
   // app.use('/graphql', graphqlHTTP({

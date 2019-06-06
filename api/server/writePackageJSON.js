@@ -9,7 +9,6 @@ module.exports = ({ destination, flavor }) => {
     delete code.dependencies.graphql;
     delete code.dependencies["graphql-server-express"];
     delete code.dependencies["express-graphql"];
-    delete code.dependencies["graphql-tools"];
   }
   // if (logging) console.log('checking server index ');
   // if (logging) console.log('creating server entrypoint');
