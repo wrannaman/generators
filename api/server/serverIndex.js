@@ -25,24 +25,24 @@ module.exports = ({ destination, logging, name, flavor }) => {
   const ${uppercase(name)}TC = composeWithMongoose(${uppercase(name)}, customizationOptions);
 
   schemaComposer.Query.addFields({
-    ${name}ById: UserTC.getResolver('findById'),
-    ${name}ByIds: UserTC.getResolver('findByIds'),
-    ${name}One: UserTC.getResolver('findOne'),
-    ${name}Many: UserTC.getResolver('findMany'),
-    ${name}Count: UserTC.getResolver('count'),
-    ${name}Connection: UserTC.getResolver('connection'),
-    ${name}Pagination: UserTC.getResolver('pagination'),
+    ${name}ById: ${uppercase(name)}TC.getResolver('findById'),
+    ${name}ByIds: ${uppercase(name)}TC.getResolver('findByIds'),
+    ${name}One: ${uppercase(name)}TC.getResolver('findOne'),
+    ${name}Many: ${uppercase(name)}TC.getResolver('findMany'),
+    ${name}Count: ${uppercase(name)}TC.getResolver('count'),
+    ${name}Connection: ${uppercase(name)}TC.getResolver('connection'),
+    ${name}Pagination: ${uppercase(name)}TC.getResolver('pagination'),
   });
 
   schemaComposer.Mutation.addFields({
-    ${name}CreateOne: UserTC.getResolver('createOne'),
-    ${name}CreateMany: UserTC.getResolver('createMany'),
-    ${name}UpdateById: UserTC.getResolver('updateById'),
-    ${name}UpdateOne: UserTC.getResolver('updateOne'),
-    ${name}UpdateMany: UserTC.getResolver('updateMany'),
-    ${name}RemoveById: UserTC.getResolver('removeById'),
-    ${name}RemoveOne: UserTC.getResolver('removeOne'),
-    ${name}RemoveMany: UserTC.getResolver('removeMany'),
+    ${name}CreateOne: ${uppercase(name)}TC.getResolver('createOne'),
+    ${name}CreateMany: ${uppercase(name)}TC.getResolver('createMany'),
+    ${name}UpdateById: ${uppercase(name)}TC.getResolver('updateById'),
+    ${name}UpdateOne: ${uppercase(name)}TC.getResolver('updateOne'),
+    ${name}UpdateMany: ${uppercase(name)}TC.getResolver('updateMany'),
+    ${name}RemoveById: ${uppercase(name)}TC.getResolver('removeById'),
+    ${name}RemoveOne: ${uppercase(name)}TC.getResolver('removeOne'),
+    ${name}RemoveMany: ${uppercase(name)}TC.getResolver('removeMany'),
   });
 
   const graphqlSchema = schemaComposer.buildSchema();
