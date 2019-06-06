@@ -62,9 +62,9 @@ docker build -t myMonkeys:0.1.0 .
 ![running](https://github.com/sugarkubes/generators/blob/master/start.png?raw=true)
 ![oas docs](https://github.com/sugarkubes/generators/blob/master/monkey.png?raw=true)
 
-
 ## Features 🙉
 - Generates simple Nodejs code
+- Graphql and Rest out of the box
 - Uses Mongodb with Mongoose ORM
 - Easy to build / deploy
 - Dockerfile included
@@ -99,11 +99,11 @@ docker build -t myMonkeys:0.1.0 .
 ## TODO
 
 - ~~basic generator tests~~
-- more tests on get
-- tests for generated code
+- graphql tests
 - other databases?
 - **your ideas?**
 - react components for the api?!?!
+- middleware for auth, token validation, etc.
 
 ## Example Schema
 
@@ -171,55 +171,16 @@ docker build -t myMonkeys:0.1.0 .
 
 ## Graphql support
 
-![Sugar Generate - Graphql](https://github.com/sugarkubes/generators/blob/master/graphql.png?raw=true)
+![graphql mutation](https://github.com/sugarkubes/generators/blob/master/graphql-mutation.png?raw=true)
+
+![graphql schema](https://github.com/sugarkubes/generators/blob/master/graphql-schema.png?raw=true)
 
 
-- graphql is supported and gets created by default so you
-can choose between rest and graphql
+graphql is supported and gets created by default so you can choose between rest and graphql
 
-graphql is located at [http://localhost:777/graphql](http://localhost:777/graphql)
+Graphql is on [http://localhost:3000/graphql](http://localhost:3000/graphql)
 
-### Some example queries
 
-```graphql
-
-# create one
-mutation {
-  createMonkey(first_name:"hello", last_name:"world", age: 10) {
-    _id
-    first_name
-  }
-}
-
-# Update one of em
-mutation {
-  updateMonkey(monkeyID: "5cf8531632b58072f0376dab" first_name: "henry"){
-    _id
-    first_name
-  }
-}
-
-# Get em all
-query {
-  monkeys {
-    _id
-    first_name
-    age
-  }
-}
-
-# Get One
-query {
-  monkey(_id: "5cf852a71b11e870df383fb1") {
-    _id
-    first_name
-    age
-  }
-}
-
-# Delete One
-
-```
 
 ## Generated project structure
 

@@ -14,6 +14,5 @@ module.exports = (schema) => {
     code.push(`*       example: { $gte: 5 } `);
 
   });
-  console.log('SCHEMA', schema);
   return code;
 };

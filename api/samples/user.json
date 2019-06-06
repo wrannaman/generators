@@ -19,7 +19,8 @@
       "type": "String",
       "trim": true,
       "select": false,
-      "immutable": true
+      "immutable": true,
+      "required": true
     },
     "intro": {
       "type": "Boolean",

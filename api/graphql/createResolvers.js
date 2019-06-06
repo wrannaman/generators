@@ -14,7 +14,6 @@ module.exports = ({ destination, flavor, name }) => {
       Query: {
         ${name}: async (root, {_id}) => {
           // // @TODO Permissions,
-          // const permission = userCan('getOne', '${name}', req.user, args);,
           // if (!permission) throw new Error('Permission denied for userCan getOne ${name}');,
           return await ${uppercase(name)}.findOne({ _id });
         },
@@ -30,15 +29,13 @@ module.exports = ({ destination, flavor, name }) => {
           // // @TODO Permissions,
           // const permission = userCan('create', '${name}', req.user, args);,
           // if (!permission) throw new Error('Permission denied for userCan create ${name}');,
-
           const new${uppercase(name)} = await ${uppercase(name)}.create(args);
-          console.log('RES', new${uppercase(name)})
           return new${uppercase(name)};
         },
         update${uppercase(name)}: async (root, args, context, info) => {
           const argscopy = Object.assign({}, args);
-          delete argscopy.${name}ID;
-          let getOne = await ${uppercase(name)}.findOne({ _id: args.${name}ID });
+          delete argscopy._id;
+          let getOne = await ${uppercase(name)}.findOne({ _id: args._id });
 
           Object.keys(args).forEach(key => getOne[key] = args[key]);
           // // @TODO Permissions,
@@ -48,7 +45,7 @@ module.exports = ({ destination, flavor, name }) => {
           return getOne;
         },
         delete${uppercase(name)}: async (root, args, context, info) => {
-          const getOne = await ${uppercase(name)}.findOne({ _id: args.${name}ID });
+          const getOne = await ${uppercase(name)}.findOne({ _id: args._id });
           // // @TODO Permissions,
           // const permission = userCan('delete', '${name}', req.user, args);,
           // if (!permission) throw new Error('Permission denied for userCan delete ${name}');,
@@ -67,7 +64,6 @@ module.exports = ({ destination, flavor, name }) => {
     // if (logging) console.log('creating user-can');
     fs.mkdirSync(modelFolder);
   }
-  console.log('create index');
   const pretty = beautify(code, { indent_size: 2, space_in_empty_paren: true });
   fs.writeFileSync(indexFile, pretty);
 };
