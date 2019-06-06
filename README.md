@@ -62,9 +62,15 @@ docker build -t myMonkeys:0.1.0 .
 ![running](https://github.com/sugarkubes/generators/blob/master/start.png?raw=true)
 ![oas docs](https://github.com/sugarkubes/generators/blob/master/monkey.png?raw=true)
 
+Graphql is on [http://localhost:3000/graphql](http://localhost:3000/graphql)
+
+![graphql mutation](https://github.com/sugarkubes/generators/blob/master/graphql-mutation.png?raw=true)
+
+![graphql schema](https://github.com/sugarkubes/generators/blob/master/graphql-schema.png?raw=true)
 
 ## Features 🙉
 - Generates simple Nodejs code
+- Graphql and Rest out of the box
 - Uses Mongodb with Mongoose ORM
 - Easy to build / deploy
 - Dockerfile included
@@ -217,7 +223,7 @@ query {
   }
 }
 
-# Delete One 
+# Delete One
 
 ```
 
