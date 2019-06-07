@@ -4,7 +4,7 @@ const beautify = require('js-beautify').js;
 module.exports = ({ schema, logging, destination, name }) => {
   const action = 'update';
   const { uppercase, createUpdateCode, sugarGenerated } = require('../utils');
-  if (logging) console.log(`API => REST => UPDATE ${name}`);
+  if (logging) console.log(`  API => REST => UPDATE ${name}`);
   const controllerSubFolder = `${destination}/controller/${name}`;
   const createFile = `${controllerSubFolder}/update.js`;
 

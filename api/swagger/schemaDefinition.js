@@ -3,7 +3,6 @@ module.exports = ({ schema, name }) => {
   const makeProperties = require('./makeProperties');
   const safeDefault = require('./safeDefault');
   const { uppercase, extraParams } = require('../utils');
-  schema = require(schema); // eslint-disable-line
   let code = [
     `      ${uppercase(name)}:`,
     `        properties:`,

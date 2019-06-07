@@ -6,12 +6,10 @@ const mkdirp = require('mkdirp');
 
 
 const { makeConfig } = require('./api/config');
-const {
-  makeSwaggerModelDefinitions,
-  validateSchema,
-} = require('./api/utils');
-
+const { makeSwaggerModelDefinitions  } = require('./api/swagger');
+const { validateSchema } = require('./api/utils');
 const { makeRouter } = require('./api/router');
+
 const {
   serverIndex,
   userCan,
@@ -116,7 +114,7 @@ const letzGetIt = async () => {
   await makeSchema(args);
   await makeModelIndex(args);
   await makeAPI(args);
-  // await makeSwaggerModelDefinitions(args);
+  await makeSwaggerModelDefinitions(args);
   // await makeRouter(args);
   // await serverIndex(args);
   // await userCan(args);

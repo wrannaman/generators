@@ -2,7 +2,7 @@ const fs = require('fs');
 const beautify = require('js-beautify').js;
 
 module.exports = ({ schema, logging, destination, name }) => {
-  if (logging) console.log(`API => REST => INDEX ${name}`);
+  if (logging) console.log(`  API => REST => INDEX ${name}`);
   const { uppercase } = require('../utils');
   const controllerSubFolder = `${destination}/controller/${name}`;
   const createFile = `${controllerSubFolder}/index.js`;

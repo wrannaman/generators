@@ -4,7 +4,7 @@ const beautify = require('js-beautify').js;
 module.exports = ({ schema, logging, destination, name }) => {
   const action = 'getOne';
   const { uppercase, sugarGenerated } = require('../utils');
-  if (logging) console.log(`API => REST => GET ONE ${name}`);
+  if (logging) console.log(`  API => REST => GET ONE ${name}`);
   const controllerSubFolder = `${destination}/controller/${name}`;
   const createFile = `${controllerSubFolder}/getOne.js`;
 
