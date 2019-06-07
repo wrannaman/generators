@@ -14,6 +14,14 @@ npm i -g sugar-generate
 - have mongodb [installed and running](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)!
 - have nodejs installed
 
+if you're running mongodb locally and using the docker container, make sure to start mongo using
+
+```sh
+sudo mongod --bind_ip_all
+```
+
+otherwise you wont be able to connect to mongo from docker. 
+
 ## Getting Started
 
 1. Create your schema. It could be as simple as:

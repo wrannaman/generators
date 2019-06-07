@@ -1,15 +1,22 @@
 const fs = require('fs');
 const beautify = require('js-beautify').js;
 
+const replaceStringValues = (str) => {
+  str = str.replace(/"String"/g, "String");
+  str = str.replace(/"string"/g, "String");
+  str = str.replace(/"boolean"/g, "Boolean");
+  str = str.replace(/"Boolean"/g, "Boolean");
+  str = str.replace(/"Number"/g, "Number");
+  str = str.replace(/"number"/g, "Number");
+  str = str.replace(/"ObjectId"/g, "Schema.Types.ObjectId");
+  return str;
+};
 
 const doMakeSchema = ({ schema, destination }) => {
   const { uppercase } = require('../utils');
   const name = schema.name;
-  console.log('up ', uppercase(name));
-  console.log('NAME', name)
   const modelFolder = `${destination}/models`;
   const modelFile = `${modelFolder}/${uppercase(name)}.js`;
-  const indexFile = `${modelFolder}/index.js`;
   // if (logging) console.log('making schema ', schema);
 
   if (!fs.existsSync(modelFolder)) {
@@ -26,16 +33,21 @@ const doMakeSchema = ({ schema, destination }) => {
 
   // format the model
   Object.keys(schema.schema).forEach(key => {
-    let value = JSON.stringify(schema.schema[key]);
-    console.log('VALUE', value)
-    value = value.replace(/"String"/g, "String");
-    value = value.replace(/"string"/g, "String");
-    value = value.replace(/"boolean"/g, "Boolean");
-    value = value.replace(/"Boolean"/g, "Boolean");
-    value = value.replace(/"Number"/g, "Number");
-    value = value.replace(/"number"/g, "Number");
-    value = value.replace(/"ObjectId"/g, "Schema.Types.ObjectId");
-    code.push(`  ${key}: ${value},`)
+    let value = schema.schema[key];
+    if (schema.schema[key].type) {
+      value = JSON.stringify(schema.schema[key]);
+      value = replaceStringValues(value);
+      code.push(`  ${key}: ${value},`);
+    } else {
+      code.push(`  ${key}: {`);
+      let _value = {};
+      Object.keys(schema.schema[key]).forEach(_key => {
+        _value = JSON.stringify(schema.schema[key][_key]);
+        _value = replaceStringValues(_value);
+        code.push(`  ${_key}: ${_value},`);
+      });
+      code.push(`},`);
+    }
   });
   // add timestamps
   code.push(`},
