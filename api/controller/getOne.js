@@ -4,15 +4,14 @@ const beautify = require('js-beautify').js;
 module.exports = ({ schema, logging, destination, name }) => {
   const action = 'getOne';
   const { uppercase, sugarGenerated } = require('../utils');
-  if (logging) console.log(`API => CRUD => GET ONE ${name}`);
-  schema = require(schema); // eslint-disable-line
+  if (logging) console.log(`  API => REST => GET ONE ${name}`);
   const controllerSubFolder = `${destination}/controller/${name}`;
   const createFile = `${controllerSubFolder}/getOne.js`;
 
   let code = [];
   const top = [
     sugarGenerated(),
-    `const ${uppercase(name)} = require("../../models/${name}.js");`,
+    `const ${uppercase(name)} = require("../../models/${uppercase(name)}");`,
     `const { userCanApiKey } = require('../../configs/config');`,
     `const userCan = require('../../user-can')(userCanApiKey);`,
   ];

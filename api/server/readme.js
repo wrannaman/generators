@@ -1,13 +1,23 @@
 const fs = require('fs');
-const beautify = require('js-beautify').js;
 
-module.exports = ({ destination, logging, name }) => {
+module.exports = ({ schema, destination }) => {
+  const { uppercase } = require('../utils');
   const modelFolder = `${destination}`;
   const indexFile = `${modelFolder}/README.md`;
-  const code = `
-# Generated API for ${name}
+  schema = require(schema); // eslint-disable-line
 
-- auto generated OAS 3.0.0 compliant api 
+  const isArray = Array.isArray(schema);
+
+  const names = [];
+  if (isArray) {
+    schema.forEach((s) => names.push(uppercase(s.name)));
+  } else {
+    names.push(schema.name);
+  }
+  const code = `
+# Generated API for ${names.join(', ')}
+
+- auto generated OAS 3.0.0 compliant api
 
 ## Run
 
@@ -42,16 +52,6 @@ configs are located at **configs/configs.json**
       "useNewUrlParser": true
     }
   },
-  "redisConfig": {
-    "host": "localhost",
-    "port": 6379,
-    "password": ""
-  },
-  "jwt_secret": "e4b717984dab52c8168f5b61bbb8bea42acfe921",
-  "basicAuth": {
-    "username": "sugar",
-    "password": "kubes"
-  },
   "env": "local",
   "userCanApiKey": "123456"
 }
@@ -59,5 +59,18 @@ configs are located at **configs/configs.json**
 
 
   `;
+
+  // to be added to configs json
+  //  "jwt_secret": "e4b717984dab52c8168f5b61bbb8bea42acfe921",
+  // "basicAuth": {
+  //   "username": "sugar",
+  //   "password": "kubes"
+  // },
+  // "redisConfig": {
+  //   "host": "localhost",
+  //   "port": 6379,
+  //   "password": ""
+  // },
+  //
   fs.writeFileSync(indexFile, code);
 };

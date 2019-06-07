@@ -4,15 +4,12 @@ const path = require('path');
 const { ArgumentParser } = require('argparse');
 const mkdirp = require('mkdirp');
 
-const {
-  makeSchema,
-  makeConfig,
-  makeModelIndex,
-  makeSwaggerModelDefinitions,
-  validateSchema,
-} = require('./api/utils');
 
+const { makeConfig } = require('./api/config');
+const { makeSwaggerModelDefinitions  } = require('./api/swagger');
+const { validateSchema } = require('./api/utils');
 const { makeRouter } = require('./api/router');
+
 const {
   serverIndex,
   userCan,
@@ -25,6 +22,8 @@ const {
 } = require('./api/server');
 const {
   makeConnection,
+  makeSchema,
+  makeModelIndex,
 } = require('./api/mongodb');
 const {
   makeTests
@@ -37,7 +36,7 @@ const {
 const { makeAPI } = require('./api/controller');
 
 const parser = new ArgumentParser({
-  version: '0.0.1',
+  version: require('./package.json').version,
   addHelp: true,
   description: 'Sugar Generator',
 });
@@ -47,9 +46,10 @@ parser.addArgument(
   {
     help: 'one of ["api", "component"]',
     choices: ["api", "component"],
-    required: true,
     metavar: "Generator Type",
-    dest: "type"
+    dest: "type",
+    defaultValue: "api",
+    required: false,
   }
 );
 
@@ -66,14 +66,17 @@ parser.addArgument(
 );
 
 parser.addArgument(
-  ['-n', '--name'],
+  ['-l', '--log'],
   {
-    help: 'api name',
-    required: true,
-    metavar: "Name",
-    dest: "name"
+    help: 'logging',
+    choices: [true, false],
+    metavar: "logging",
+    dest: "logging",
+    defaultValue: true,
   }
 );
+
+// required
 
 parser.addArgument(
   ['-s', '--schema'],
@@ -82,17 +85,6 @@ parser.addArgument(
     required: true,
     metavar: "Schema",
     dest: "schema"
-  }
-);
-
-parser.addArgument(
-  ['-l', '--log'],
-  {
-    help: 'logging',
-    choices: [true, false],
-    metavar: "logging",
-    dest: "logging",
-    defaultValue: true,
   }
 );
 
@@ -133,9 +125,6 @@ const letzGetIt = async () => {
   await writeDockerIgnore(args);
   await readme(args);
   await makeTests(args);
-  // if (args.flavor === 'graphql') {
-  //   await makeGraphql(args);
-  // }
   if (args.logging) console.log('all done 🚀'); // eslint-disable-line
 };
 

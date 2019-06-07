@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "PORT=${PORT} NODE_ENV=production node index.js",
+    "start": "PORT=${PORT} NODE_ENV=production npm run dev-action",
     "dev": "nodemon --exec npm run dev-action --ignore swagger.json --ignore swagger.yaml",
     "dev-action": "npm run docs && node index.js",
     "test": "mocha --timeout 10000 --exit",
