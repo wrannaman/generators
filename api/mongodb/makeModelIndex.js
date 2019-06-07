@@ -1,9 +1,8 @@
 const fs = require('fs');
 const beautify = require('js-beautify').js;
+const modelIndex = require('./modelIndex');
 
-const { modelIndex } = require('../mongodb');
-
-module.exports = ({ schema, logging, destination }) => {
+module.exports = ({ destination }) => {
   const modelFolder = `${destination}/models`;
   const indexFile = `${destination}/models/index.js`;
   // if (logging) console.log('updating models/index.js ');
@@ -13,4 +12,4 @@ module.exports = ({ schema, logging, destination }) => {
   const code = modelIndex(items);
   const pretty = beautify(code, { indent_size: 2, space_in_empty_paren: true });
   fs.writeFileSync(indexFile, pretty);
-}
+};

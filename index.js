@@ -7,7 +7,6 @@ const mkdirp = require('mkdirp');
 
 const { makeConfig } = require('./api/config');
 const {
-  makeModelIndex,
   makeSwaggerModelDefinitions,
   validateSchema,
 } = require('./api/utils');
@@ -26,6 +25,7 @@ const {
 const {
   makeConnection,
   makeSchema,
+  makeModelIndex,
 } = require('./api/mongodb');
 const {
   makeTests
@@ -114,8 +114,8 @@ const letzGetIt = async () => {
   await makeConfig(args);
   await makeConnection(args);
   await makeSchema(args);
-  // await makeModelIndex(args);
-  // await makeAPI(args);
+  await makeModelIndex(args);
+  await makeAPI(args);
   // await makeSwaggerModelDefinitions(args);
   // await makeRouter(args);
   // await serverIndex(args);

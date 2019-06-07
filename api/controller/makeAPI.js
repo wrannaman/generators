@@ -1,6 +1,7 @@
 const fs = require('fs');
 
-module.exports = ({ schema, logging, destination, name }) => {
+
+const doMakeApi = ({ schema, logging, destination, name }) => {
   const create = require('./create');
   const get = require('./get');
   const getOne = require('./getOne');
@@ -8,27 +9,36 @@ module.exports = ({ schema, logging, destination, name }) => {
   const remove = require('./delete');
   const indexFile = require('./indexFile');
 
-  // if (logging) console.log('***** API *****');
-
-  const controllerFolder = `${destination}/controller`;
   const controllerSubFolder = `${destination}/controller/${name}`;
 
-  if (!fs.existsSync(controllerFolder)) {
-    // if (logging) console.log('creating dir controller ');
-    fs.mkdirSync(controllerFolder);
-  }
   if (!fs.existsSync(controllerSubFolder)) {
-    // if (logging) console.log('creating dir named controller ');
     fs.mkdirSync(controllerSubFolder);
   }
 
-  // if (!fs.existsSync(createFile)) {
   create({ schema, logging, destination, name });
   get({ schema, logging, destination, name });
   getOne({ schema, logging, destination, name });
   update({ schema, logging, destination, name });
   remove({ schema, logging, destination, name });
   indexFile({ schema, logging, destination, name });
-  // }
+};
 
+module.exports = ({ schema, logging, destination }) => {
+
+  const controllerFolder = `${destination}/controller`;
+  if (!fs.existsSync(controllerFolder)) {
+    fs.mkdirSync(controllerFolder);
+  }
+
+  schema = require(schema); // eslint-disable-line
+  if (Array.isArray(schema)) {
+   schema.forEach((_schema) => {
+     if (logging) console.log("SCHEMA =>", _schema.name);
+     doMakeApi({ schema: _schema, logging, destination, name: _schema.name })
+
+   });
+  } else {
+    const name = require(schema).name; // eslint-disable-line
+    doMakeApi({ schema, logging, destination, name })
+  }
 };

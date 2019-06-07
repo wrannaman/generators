@@ -3,4 +3,4 @@ module.exports = (models = []) => {
   models.forEach((model) => code.push(`${model}: require('./${model}'),`));
   code.push("};");
   return code.join('\n');
-}
+};

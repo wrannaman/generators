@@ -1,5 +1,4 @@
 module.exports = {
-  makeModelIndex: require('./makeModelIndex'),
   makeSwaggerModelDefinitions: require('./makeSwaggerModelDefinitions'),
   uppercase: require('./uppercase'),
   createValidationCode: require('./createValidationCode'),

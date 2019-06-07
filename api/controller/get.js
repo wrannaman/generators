@@ -4,8 +4,7 @@ const beautify = require('js-beautify').js;
 module.exports = ({ schema, logging, destination, name }) => {
   const action = 'get';
   const { uppercase, getValidationCode, sugarGenerated, extraParams, getSchemaQueryDefinitions } = require('../utils');
-  if (logging) console.log(`API => CRUD => GET ${name}`);
-  schema = require(schema); // eslint-disable-line
+  if (logging) console.log(`API => REST => GET ${name}`);
   const controllerSubFolder = `${destination}/controller/${name}`;
   const createFile = `${controllerSubFolder}/get.js`;
 
