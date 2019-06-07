@@ -13,10 +13,10 @@ module.exports = ({ schema, logging, destination, name }) => {
   servers:
     - url: http://localhost:7777
       description: local7777
+    - url: https://sugar-generate-demo-iqwznvcybq-uc.a.run.app
+      description: test
     - url: http://localhost:3000
       description: local3000
-    - url: http://staging-api.example.com
-      description: Optional server description, e.g. Internal staging server for testing
   components:
     schemas:
 `;

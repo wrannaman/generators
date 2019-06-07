@@ -4,9 +4,9 @@ const path = require('path');
 const { ArgumentParser } = require('argparse');
 const mkdirp = require('mkdirp');
 
+
+const { makeConfig } = require('./api/config');
 const {
-  makeSchema,
-  makeConfig,
   makeModelIndex,
   makeSwaggerModelDefinitions,
   validateSchema,
@@ -25,6 +25,7 @@ const {
 } = require('./api/server');
 const {
   makeConnection,
+  makeSchema,
 } = require('./api/mongodb');
 const {
   makeTests
@@ -37,7 +38,7 @@ const {
 const { makeAPI } = require('./api/controller');
 
 const parser = new ArgumentParser({
-  version: '0.0.1',
+  version: require('./package.json').version,
   addHelp: true,
   description: 'Sugar Generator',
 });
@@ -47,9 +48,10 @@ parser.addArgument(
   {
     help: 'one of ["api", "component"]',
     choices: ["api", "component"],
-    required: true,
     metavar: "Generator Type",
-    dest: "type"
+    dest: "type",
+    defaultValue: "api",
+    required: false,
   }
 );
 
@@ -66,14 +68,17 @@ parser.addArgument(
 );
 
 parser.addArgument(
-  ['-n', '--name'],
+  ['-l', '--log'],
   {
-    help: 'api name',
-    required: true,
-    metavar: "Name",
-    dest: "name"
+    help: 'logging',
+    choices: [true, false],
+    metavar: "logging",
+    dest: "logging",
+    defaultValue: true,
   }
 );
+
+// required
 
 parser.addArgument(
   ['-s', '--schema'],
@@ -82,17 +87,6 @@ parser.addArgument(
     required: true,
     metavar: "Schema",
     dest: "schema"
-  }
-);
-
-parser.addArgument(
-  ['-l', '--log'],
-  {
-    help: 'logging',
-    choices: [true, false],
-    metavar: "logging",
-    dest: "logging",
-    defaultValue: true,
   }
 );
 
@@ -120,19 +114,19 @@ const letzGetIt = async () => {
   await makeConfig(args);
   await makeConnection(args);
   await makeSchema(args);
-  await makeModelIndex(args);
-  await makeAPI(args);
-  await makeSwaggerModelDefinitions(args);
-  await makeRouter(args);
-  await serverIndex(args);
-  await userCan(args);
-  await dockerFile(args);
-  await writePackageJSON(args);
-  await writeEslint(args);
-  await writeGitIgnore(args);
-  await writeDockerIgnore(args);
-  await readme(args);
-  await makeTests(args);
+  // await makeModelIndex(args);
+  // await makeAPI(args);
+  // await makeSwaggerModelDefinitions(args);
+  // await makeRouter(args);
+  // await serverIndex(args);
+  // await userCan(args);
+  // await dockerFile(args);
+  // await writePackageJSON(args);
+  // await writeEslint(args);
+  // await writeGitIgnore(args);
+  // await writeDockerIgnore(args);
+  // await readme(args);
+  // await makeTests(args);
   // if (args.flavor === 'graphql') {
   //   await makeGraphql(args);
   // }

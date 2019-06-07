@@ -3,4 +3,5 @@ module.exports = {
   modelIndex: require('./modelIndex'),
   connectionMongo: require('./connectionMongo'),
   connectionIndex: require('./connectionIndex'),
+  makeSchema: require('./makeSchema'),
 };
