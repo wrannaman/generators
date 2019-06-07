@@ -121,15 +121,15 @@ save this to **monkey.json**
 
 ```sh
 sugar-generate \
---schema ./samples/monkey.json \
---destination /private/var/andrew/generator-tests/3
+--schema ./monkey.json \
+--destination ./my-monkeys
 ```
 or the short version
 
 ```sh
 sugar-generate \
--s ./samples/monkey.json \
--s ./my-monkeys
+-s ./monkey.json \
+-d ./my-monkeys
 ```
 
 **Note this is slightly different than previous versions. The schemas require a name now.**
