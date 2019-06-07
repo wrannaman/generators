@@ -11,7 +11,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   let code = [];
   const top = [
     sugarGenerated(),
-    `const { ${uppercase(name)} } = require("../../models");`,
+    `const ${uppercase(name)} = require("../../models/${uppercase(name)}");`,
     `const { userCanApiKey } = require('../../configs/config');`,
     `const userCan = require('../../user-can')(userCanApiKey);`,
   ];

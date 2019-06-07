@@ -1,6 +1,6 @@
 const randChange = (schema, fake3A, doRequire = true) => {
   const k = Object.keys(fake3A);
-  if (doRequire) schema = require(schema).schema; // eslint-disable-line
+  // if (doRequire) schema = require(schema).schema; // eslint-disable-line
   const genData = require('./genData');
   const randomProperty = k[Math.floor(Math.random() * k.length)];
   fake3A[randomProperty] = genData(schema[randomProperty].type, schema[randomProperty], schema[randomProperty].enum);

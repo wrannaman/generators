@@ -1,6 +1,7 @@
 const fo = (schema, asString = false, parseSchema = true) => {
   const genData = require('./genData');
-  if (parseSchema) schema = require(schema).schema; // eslint-disable-line
+
+  // if (parseSchema) schema = require(schema).schema; // eslint-disable-line
   const fakeObject = {};
   Object.keys(schema).forEach((key) => {
     fakeObject[key] = genData(schema[key].type, schema[key], schema[key].enum);
