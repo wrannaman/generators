@@ -115,7 +115,7 @@ const letzGetIt = async () => {
   await makeModelIndex(args);
   await makeAPI(args);
   await makeSwaggerModelDefinitions(args);
-  // await makeRouter(args);
+  await makeRouter(args);
   // await serverIndex(args);
   // await userCan(args);
   // await dockerFile(args);
