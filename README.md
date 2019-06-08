@@ -178,12 +178,18 @@ docker build -t myMonkeys:0.1.0 .
 
 ## TODO
 
+
+### API
 - ~~basic generator rest tests~~
 - graphql tests
 - other databases?
 - **your ideas?**
-- react components for the api
 - middleware for auth, token validation, etc.
+
+### Front End
+
+- react components for the api
+- 
 
 
 ## Graphql support
