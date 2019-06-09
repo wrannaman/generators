@@ -2,7 +2,8 @@
 const path = require('path');
 const { ArgumentParser } = require('argparse');
 const { validateSchema } = require('./api/utils');
-const makeApi = require('./api/makeApi');
+const makeApi = require('./api/makeAPI');
+const makeApp = require('./app/makeApp');
 
 const parser = new ArgumentParser({
   version: require('./package.json').version,
@@ -75,7 +76,8 @@ args.destination = args.destination;
 const validSchema = validateSchema(args.schema);
 
 if (validSchema) {
-  makeApi(args);
+  makeApi(Object.assign({}, args, { destination: `${args.destination}/api` }));
+  makeApp(Object.assign({}, args, { destination: `${args.destination}/app` }));
 } else {
   console.error('Error => invalid schema.');
 }
