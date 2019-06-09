@@ -19,13 +19,17 @@ module.exports = (schema, stringify = false, keysOnly = false) => {
         default:
 
       }
-      console.log('schema.schema[k].unique  ', schema.schema[k].unique);
-      columns.push({
+      const obj = {
         title: uppercase(k),
         field: k,
         type,
-        readonly: schema.schema[k].unique ? true : false
-      });
+        readonly: false // schema.schema[k].unique ? false : true
+      };
+      if (schema.schema[k].enum) {
+        obj.lookup = {};
+        schema.schema[k].enum.forEach(item => obj.lookup[item] = uppercase(item));
+      }
+      columns.push(obj);
     } else {
       Object.keys(schema.schema[k]).forEach((_key) => {
         const _subType = schema.schema[k][_key].type;

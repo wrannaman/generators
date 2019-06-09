@@ -32,6 +32,7 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import Refresh from '@material-ui/icons/RefreshOutlined';
 
 
 import apiCall from '../../src/apiCall';
@@ -59,7 +60,8 @@ const tableIcons = {
   Search: Search,
   SortArrow: ArrowUpward,
   ThirdStateCheck: Remove,
-  ViewColumn: ViewColumn
+  ViewColumn: ViewColumn,
+  Refresh: Refresh,
 };
 
 class ${uppercase(schema.name)}Table extends Component {
@@ -78,6 +80,8 @@ class ${uppercase(schema.name)}Table extends Component {
       this.state.totalDocs = 0;
       this.state.offset = 0;
       // this.schema = ${JSON.stringify(schema.schema)}
+      this.tableRef = React.createRef();
+
     }
 
     componentWillMount () {
@@ -85,11 +89,9 @@ class ${uppercase(schema.name)}Table extends Component {
     }
 
     fetchData = async (query) => {
-      console.log('QUERY ${schema.name}s', query)
       if (!query) query = {};
       query.limit = query.pageSize || 10;
       const res = await apiCall({ url: '${schema.name}s', method: 'GET', params: query });
-      console.log('JSON${schema.name}s', res.${schema.name}s)
 
       return {
         data: res.${schema.name}s.docs,
@@ -104,15 +106,32 @@ class ${uppercase(schema.name)}Table extends Component {
 
     onRowAdd = async (newData) => {
       console.log('NEWDATA', newData)
+      const res = await apiCall({ url: "${schema.name}", method: 'POST', data: newData });
+      if (!res.error) this.setState({ snackbar: { variant: 'success', message: '${uppercase(schema.name)} Created.' }});
+      else this.setState({ snackbar: { variant: 'error', message: res.error }});
     }
-    onRowUpdate = async (newData) => {
-      console.log('NEWDATA', newData)
+    onRowUpdate = async (newData, oldData) => {
+      const res = await apiCall({ url: \`${schema.name}/\${oldData._id}\`, method: 'PUT', data: newData });
+      console.log('update', res)
+      if (!res.error) this.setState({ snackbar: { variant: 'success', message: '${uppercase(schema.name)} Updated.' }});
+      else this.setState({ snackbar: { variant: 'error', message: res.error }});
     }
-    onRowDelete = async (newData) => {
-      console.log('NEWDATA', newData)
+    onRowDelete = async (oldData) => {
+      const res = await apiCall({ url: \`${schema.name}/\${oldData._id}\`, method: 'DELETE', })
+      if (!res.error) this.setState({ snackbar: { variant: 'success', message: '${uppercase(schema.name)} Deleted.' }});
+      else this.setState({ snackbar: { variant: 'error', message: res.error }});
     }
 
     render () {
+      /*
+
+      Cant edit / delete when selection: true
+
+      https://github.com/mbrn/material-table/issues/648
+
+      */
+
+
       const { classes } = this.props;
       const { snackbar, ${getReactState(schema, true, true)} } = this.state;
       return (
@@ -125,8 +144,11 @@ class ${uppercase(schema.name)}Table extends Component {
                 icons={tableIcons}
                 title="${uppercase(schema.name)} Table"
                 options={{
-                  filtering: true
+                  filtering: true,
+                  selection: false,
+                  exportButton: true
                 }}
+                ref={this.tableRef}
                 editable={{
                   onRowAdd: this.onRowAdd,
                   onRowUpdate: this.onRowUpdate,
@@ -142,7 +164,14 @@ class ${uppercase(schema.name)}Table extends Component {
                   },
                   isDeletable: () => true,
                  }}
-
+                 actions={[
+                   {
+                     icon: Refresh,
+                     tooltip: 'Refresh Data',
+                     isFreeAction: true,
+                     onClick: () => this.tableRef.current && this.tableRef.current.onQueryChange(),
+                   }
+                 ]}
               />
             </div>
           </div>
