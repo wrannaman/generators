@@ -4,11 +4,16 @@ module.exports = async (file) => {
   const fileName = `${file}/src/apiCall.js`
   const code = `
   import fetch from 'isomorphic-unfetch';
+  const queryString = require('query-string');
 
   import { apiURL } from '../config';
 
-  module.exports = ({ url, method, data }) => {
+  module.exports = ({ url, method, data, params = null }) => {
     // Default options are marked with *
+    let stringified = "";
+    if (params) {
+      stringified = \`?\${queryString.stringify(params)}\`;
+    }
     const fetchObject = {
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +30,7 @@ module.exports = async (file) => {
     if (method) fetchObject.method = method;
     if (data) fetchObject.body = JSON.stringify(data);
 
-    return fetch(\`\${apiURL}/\${url}\`, fetchObject)
+    return fetch(\`\${apiURL}/\${url}\${stringified}\`, fetchObject)
     .then(response => response.json());
   }
   `;

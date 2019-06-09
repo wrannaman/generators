@@ -1,6 +1,7 @@
 const { uppercase } = require('../../api/utils');
 
 const radio = (name, type, fullObject) => {
+  const enumArray = fullObject.enum.map((item) => (`<FormControlLabel value="${item}" control={<Radio />} label="${uppercase(item)}" />`));
   return `
       <FormControl component="fieldset" className={classes.radioRoot}>
         <FormLabel component="legend">${uppercase(name)}</FormLabel>
@@ -11,7 +12,7 @@ const radio = (name, type, fullObject) => {
           value={this.state.${name}}
           onChange={this.handleChange("${name}")}
         >
-          ${fullObject.enum.map((item) => (`<FormControlLabel value="${item}" control={<Radio />} label="${uppercase(item)}" />`))}
+        ${enumArray.join('\n')}
         </RadioGroup>
       </FormControl>
   `;
@@ -27,7 +28,6 @@ module.exports = (name, type, fullObject) => {
   } else {
     textFieldType = htmlType;
   }
-  console.log('fullObject', fullObject);
   switch (type) {
     case 'String':
     case 'Number':

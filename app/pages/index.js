@@ -3,12 +3,29 @@ const { uppercase } = require('../../api/utils');
 
 const getImportStrings = (schema) => {
   const names = schema.name ? [uppercase(schema.name)] : schema.map((s) => uppercase(s.name));
-  return names.map((name) => `import Create${name}Form from '../components/${name}/Create${name}Form';`).join('\n');
+  return names.map((name) => {
+    return `
+      import Create${name}Form from '../components/${name}/Create${name}Form';
+      import ${uppercase(name)}Table from '../components/${name}/${uppercase(name)}Table';
+
+    `
+  }).join('\n');
 };
 
-const getFormStrings = (schema) => {
+const getComponentStrings = (schema) => {
   const names = schema.name ? [uppercase(schema.name)] : schema.map((s) => uppercase(s.name));
-  return names.map((name) => `<Paper className={styles.paper}><Create${name}Form /></Paper>`).join('\n');
+  return names.map((name) => `
+    <div>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Create ${uppercase(name)}
+        </Typography>
+        <Paper className={styles.paper}>
+          <Create${name}Form />
+        </Paper>
+        <${uppercase(name)}Table />
+      <Divider />
+    </div>
+  `).join('\n');
 };
 
 module.exports = async ({ destination, schema }) => {
@@ -20,6 +37,7 @@ module.exports = async ({ destination, schema }) => {
   import Typography from '@material-ui/core/Typography';
   import Box from '@material-ui/core/Box';
   import Paper from '@material-ui/core/Paper';
+  import Divider from '@material-ui/core/Divider';
   import MuiLink from '@material-ui/core/Link';
   import Grid from '@material-ui/core/Grid';
   import { makeStyles } from '@material-ui/core/styles';
@@ -42,7 +60,7 @@ module.exports = async ({ destination, schema }) => {
   export default function Index () {
     const styles = useStyles()
     return (
-      <Container maxWidth="sm">
+      <Container maxWidth="lg">
         <Box my={4}>
           <Typography variant="h4" component="h1" gutterBottom>
             Sugar Generator Index Page
@@ -56,12 +74,12 @@ module.exports = async ({ destination, schema }) => {
 
             <Grid item xs={12}>
               <Typography variant="h4" component="h1" gutterBottom>
-                Create Form Component
+                Create Form Component(s)
               </Typography>
             </Grid>
 
             <Grid item xs={12}>
-               ${getFormStrings(schema)}
+               ${getComponentStrings(schema)}
             </Grid>
           </Grid>
 

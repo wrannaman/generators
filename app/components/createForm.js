@@ -102,7 +102,6 @@ class Create${uppercase(schema.name)}Form extends Component {
     constructor(props) {
       super(props);
       this.state = ${getReactState(schema, true)}
-      this.state.error = "";
       this.state.snackbar = {
         variant: 'success',
         message: '',
@@ -155,8 +154,7 @@ class Create${uppercase(schema.name)}Form extends Component {
 
     render () {
       const { classes } = this.props;
-      const { ${getReactState(schema, true, true)} } = this.state;
-      const { snackbar } = this.state;
+      const { snackbar, ${getReactState(schema, true, true)} } = this.state;
       return (
         <div className={classes.container}>
           <form onSubmit={this.submit} className={classes.form}>
@@ -172,14 +170,6 @@ class Create${uppercase(schema.name)}Form extends Component {
               Create ${uppercase(schema.name)}
             </Button>
           </form>
-          {this.state.error && (
-            <div className={classes.errorContainer}>
-              <Typography variant="body2" color="error" align="center">
-                {this.state.error}
-              </Typography>
-            </div>
-          )}
-
           <Snackbar
             variant={snackbar.variant}
             message={snackbar.message}

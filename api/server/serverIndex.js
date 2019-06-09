@@ -84,10 +84,10 @@ module.exports = ({ schema, destination, logging, flavor }) => {
     app.use(cors());
     app.use(jsonParser);
     ${flavor !== 'graphql' ? '' : graphql.join('')}
-    // app.use((req, res, next) => {
-    //   console.log(\`\${req.method} \${req.url}\`);
-    //   return next();
-    // });
+    app.use((req, res, next) => {
+      console.log(\`\${req.method} \${req.url}\`);
+      return next();
+    });
     app.use('/health', (req, res) => res.status(200).json({ healthy: true, time: new Date().getTime() }));
 
     // routes
