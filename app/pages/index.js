@@ -78,13 +78,13 @@ module.exports = async ({ destination, schema }) => {
           <hr />
           <Grid container spacing={3}>
 
-            <Grid item xs>
+            <Grid item>
               <Typography variant="h4" component="h1" gutterBottom>
                 Create Form Component(s)
               </Typography>
             </Grid>
 
-            <Grid item xs>
+            <Grid item>
                ${getComponentStrings(schema)}
             </Grid>
           </Grid>
