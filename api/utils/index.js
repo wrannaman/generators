@@ -7,4 +7,5 @@ module.exports = {
   extraParams: require('./extraParams'),
   validateSchema: require('./validateSchema'),
   getSchemaQueryDefinitions: require('./getSchemaQueryDefinitions'),
+  getSearchCode: require('./getSearchCode'),
 };

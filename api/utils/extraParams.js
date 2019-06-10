@@ -27,4 +27,9 @@ module.exports = {
     default: "",
     example: "search string"
   },
+  filters: {
+    type: "string",
+    default: "",
+    example: 'stringified array [{"column":{"title":"Name","field":"name","type":"…Sort":"asc","id":0}},"operator":"=","value":"1"}]"'
+  }
 };

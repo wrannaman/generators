@@ -2,8 +2,6 @@
 
 ```sh
 NODE_ENV=dev nodemon index.js \
---type api \
---name monkey \
---schema ./api/samples/monkey.json \
+--schema ./api/samples/multi.json \
 --destination /var/andrew/generator-tests/7
 ```

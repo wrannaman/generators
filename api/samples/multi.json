@@ -11,11 +11,13 @@
         "trim": true,
         "required": true,
         "unique": true,
-        "immutable": true
+        "immutable": true,
+        "htmlType": "email"
       },
       "intro": {
         "type": "Boolean",
-        "default": false
+        "default": false,
+        "htmlType": "boolean"
       },
       "sub": {
         "one": {
@@ -28,13 +30,23 @@
           "required": true
         },
         "three": {
-          "type": "Number"
+          "type": "Number",
+          "min": 0,
+          "max": 1000,
+          "htmlType": "number"
         }
       },
       "role": {
         "type": "String",
         "enum": ["user", "maker"],
-        "default": "user"
+        "default": "user",
+        "htmlType": "radio"
+      },
+      "carrot": {
+        "type": "String",
+        "enum": ["sweet", "ugly"],
+        "default": "ugly",
+        "htmlType": "radio"
       }
     },
     "statics": {
@@ -55,7 +67,8 @@
       },
       "users": {
         "type": "ObjectId",
-        "ref": "Users"
+        "ref": "Users",
+        "htmlType": "text"
       }
     }
   }

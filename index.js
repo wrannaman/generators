@@ -1,39 +1,9 @@
 #!/usr/bin/env node
-const fs = require('fs');
 const path = require('path');
 const { ArgumentParser } = require('argparse');
-const mkdirp = require('mkdirp');
-
-
-const { makeConfig } = require('./api/config');
-const { makeSwaggerModelDefinitions  } = require('./api/swagger');
 const { validateSchema } = require('./api/utils');
-const { makeRouter } = require('./api/router');
-
-const {
-  serverIndex,
-  userCan,
-  dockerFile,
-  writePackageJSON,
-  writeEslint,
-  writeDockerIgnore,
-  writeGitIgnore,
-  readme
-} = require('./api/server');
-const {
-  makeConnection,
-  makeSchema,
-  makeModelIndex,
-} = require('./api/mongodb');
-const {
-  makeTests
-} = require('./api/tests');
-
-const {
-  makeGraphql
-} = require('./api/graphql');
-
-const { makeAPI } = require('./api/controller');
+const makeApi = require('./api/makeAPI');
+const makeApp = require('./app/makeApp');
 
 const parser = new ArgumentParser({
   version: require('./package.json').version,
@@ -103,35 +73,12 @@ const args = parser.parseArgs();
 args.schema = path.join(process.cwd(), args.schema);
 args.destination = args.destination;
 
-const letzGetIt = async () => {
-  if (!fs.existsSync(args.destination)) {
-    mkdirp.sync(args.destination);
-  } else if (process.env.NODE_ENV !== 'dev') {
-     return console.log(`uh oh, looks like there's something already at ${args.destination}`); // eslint-disable-line
-  }
-  await makeConfig(args);
-  await makeConnection(args);
-  await makeSchema(args);
-  await makeModelIndex(args);
-  await makeAPI(args);
-  await makeSwaggerModelDefinitions(args);
-  await makeRouter(args);
-  await serverIndex(args);
-  await userCan(args);
-  await dockerFile(args);
-  await writePackageJSON(args);
-  await writeEslint(args);
-  await writeGitIgnore(args);
-  await writeDockerIgnore(args);
-  await readme(args);
-  await makeTests(args);
-  if (args.logging) console.log('all done 🚀'); // eslint-disable-line
-};
-
 const validSchema = validateSchema(args.schema);
 
 if (validSchema) {
-  letzGetIt();
+  console.log('uncomment dont make api');
+  makeApi(Object.assign({}, args, { destination: `${args.destination}/api` }));
+  makeApp(Object.assign({}, args, { destination: `${args.destination}/app` }));
 } else {
   console.error('Error => invalid schema.');
 }
