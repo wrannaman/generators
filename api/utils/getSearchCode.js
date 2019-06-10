@@ -27,13 +27,11 @@ module.exports = (schema, name) => {
     if (item.type) {
       code = code.concat(searchCodeByType(item.type, key));
     } else {
-      console.log('sub document');
       Object.keys(item).forEach((_key) => {
         code = code.concat(searchCodeByType(item[_key].type, `"${key}.${_key}"`));
       })
     }
   });
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });
-  console.log('PRETTY', pretty)
   return pretty;
 };

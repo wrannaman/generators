@@ -98,7 +98,7 @@ module.exports = ({ originalSchema, schema, destination, logging, }) => {
       const value = schema[key].type === 'String' ? \`"\${fake[key]}"\` : fake[key];
       str.push(\`\${key}: \${value}\`);
     });
-    console.log('fake ', fake);
+    // console.log('fake ', fake);
     return { obj: fake, str: str.join(', ') };
   };
 

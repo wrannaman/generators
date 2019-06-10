@@ -76,7 +76,6 @@ args.destination = args.destination;
 const validSchema = validateSchema(args.schema);
 
 if (validSchema) {
-  console.log('uncomment dont make api');
   makeApi(Object.assign({}, args, { destination: `${args.destination}/api` }));
   makeApp(Object.assign({}, args, { destination: `${args.destination}/app` }));
 } else {
