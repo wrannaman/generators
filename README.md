@@ -91,6 +91,8 @@ npm run dev
 
 ### Behold Magic
 
+A fully functioning react table and form with searching sorting filtering, editing, adding, global search, download, and refresh.
+
 ![SugarKubes Generated App](https://github.com/sugarkubes/generators/blob/master/table-component.png?raw=true)
 
 # Links
