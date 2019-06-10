@@ -4,6 +4,7 @@ const next = require('./next-config');
 const pack = require('./package');
 const readme = require('./readme');
 const config = require('./config');
+const dockerfile = require('./dockerfile');
 
 module.exports = async (dest) => {
   babel(dest);
@@ -12,4 +13,5 @@ module.exports = async (dest) => {
   pack(dest);
   readme(dest);
   config(dest);
+  dockerfile(dest);
 };

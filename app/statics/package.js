@@ -12,7 +12,8 @@ module.exports = async (fileName) => {
     "scripts": {
       "dev": "next",
       "build": "next build",
-      "start": "next start"
+      "start": "next start",
+      "start-prod": "next start -p \${PORT}"
     },
     "author": "",
     "license": "",
