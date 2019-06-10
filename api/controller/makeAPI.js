@@ -32,13 +32,13 @@ module.exports = ({ schema, logging, destination }) => {
 
   schema = require(schema); // eslint-disable-line
   if (Array.isArray(schema)) {
-   schema.forEach((_schema) => {
-     if (logging) console.log("SCHEMA =>", _schema.name);
-     doMakeApi({ schema: _schema, logging, destination, name: _schema.name })
-
-   });
+    schema.forEach((_schema) => {
+      console.log("SCHEMA =>", _schema.name);
+      doMakeApi({ schema: _schema, logging, destination, name: _schema.name });
+    });
   } else {
-    const name = require(schema).name; // eslint-disable-line
-    doMakeApi({ schema, logging, destination, name })
+    const name = schema.name; // eslint-disable-line
+    console.log("SCHEMA =>", name);
+    doMakeApi({ schema, logging, destination, name });
   }
 };

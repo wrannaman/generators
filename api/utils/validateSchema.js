@@ -5,13 +5,13 @@ module.exports = (schema) => {
       let isValid = false;
       schema.forEach((s) => {
         // schema name required
-        if (!s.name) isValid = false;
+        if (!s.name) isValid = "Each schema requires a name";
         if (s.schema) isValid = true;
       });
       return isValid;
     } else {
       // schema name required
-      if (!schema.name) return false;
+      if (!schema.name) return "Schema requires a name";
       if (schema.schema) return true;
     }
     return false;
