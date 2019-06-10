@@ -3,7 +3,7 @@ const beautify = require('js-beautify').js;
 
 module.exports = ({ schema, logging, destination, name }) => {
   const action = 'get';
-  const { uppercase, getValidationCode, sugarGenerated, extraParams, getSchemaQueryDefinitions } = require('../utils');
+  const { getSearchCode, uppercase, getValidationCode, sugarGenerated, extraParams, getSchemaQueryDefinitions } = require('../utils');
   if (logging) console.log(`  API => REST => GET ${name}`);
   const controllerSubFolder = `${destination}/controller/${name}`;
   const createFile = `${controllerSubFolder}/get.js`;
@@ -80,7 +80,7 @@ module.exports = ({ schema, logging, destination, name }) => {
     `  try {`,
     `    let { ${extraKeys.join(', ')}} = req.query;`,
     `    const { ${schemaKeys.join(', ')}} = req.query;`,
-    `    console.log('req query ', req.query);`,
+    //`    console.log('req query ', req.query);`,
     `    // The model query`,
     `    const find = {};`,
     `    let parsedFilters = null;`,
@@ -88,15 +88,12 @@ module.exports = ({ schema, logging, destination, name }) => {
         const where = {};
         if (filters && filters !== '[]') {
          parsedFilters = JSON.parse(filters);
-         console.log('PARSEDFILTERS', parsedFilters)
 
           parsedFilters.forEach((f) => {
             let regexValue = {};
-            console.log('F.COLUMN.TYPE', f.column.type)
             if (f.column.type === 'boolean') {
               regexValue = f.value === 'checked' ? true : false;
             } else if (Array.isArray(f.value) && f.value.length > 0) {
-              console.log('its an enum');
               if (f.column.type === 'string') {
                 regexValue = { $in: [] };
                 f.value.forEach((val) => {
@@ -116,7 +113,14 @@ module.exports = ({ schema, logging, destination, name }) => {
             if (JSON.stringify(regexValue) !== '{}') find[f.column.field] = regexValue;
           });
     `,
-    `    }`
+    `    }`,
+    `
+
+              // search
+              if (search) {
+                ${getSearchCode(schema)};
+              }
+    `,
   ];
   const end = [
     `    `,
@@ -142,8 +146,8 @@ module.exports = ({ schema, logging, destination, name }) => {
   ];
   const save = [
     `// save`,
-    `console.log('find ', find);`,
-    `console.log('where', where);`,
+    // `console.log('find ', find);`,
+    // `console.log('where', where);`,
     `const ${name} = await ${uppercase(name)}.paginate(find, where); // @TODO populate: '<model name>'`,
     `return res.json({ ${name}s: ${name} });`
   ];

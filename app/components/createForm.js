@@ -38,6 +38,10 @@ module.exports = async ({ destination, schema }) => {
     container: {
       display: 'flex',
       flexWrap: 'wrap',
+      maxWidth: 600,
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: '0 auto',
     },
     fields: {
       display: 'flex',
@@ -49,6 +53,9 @@ module.exports = async ({ destination, schema }) => {
     form: {
       // flexDirection: 'column',
       // display: 'flex',
+      maxWidth: 600,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     radioGroup: {
       flexDirection: 'row',

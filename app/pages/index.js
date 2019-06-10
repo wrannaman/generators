@@ -15,15 +15,15 @@ const getImportStrings = (schema) => {
 const getComponentStrings = (schema) => {
   const names = schema.name ? [uppercase(schema.name)] : schema.map((s) => uppercase(s.name));
   return names.map((name) => `
-    <div>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Create ${uppercase(name)}
-        </Typography>
+    <div className={styles.section}>
+      <Divider style={{ margin: 25 }}/>
         <Paper className={styles.paper}>
+          <Typography variant="h4" component="h2" gutterBottom>
+            Create ${uppercase(name)} Form
+          </Typography>
           <Create${name}Form />
         </Paper>
         <${uppercase(name)}Table />
-      <Divider />
     </div>
   `).join('\n');
 };
@@ -45,17 +45,24 @@ module.exports = async ({ destination, schema }) => {
   import ProTip from '../src/ProTip';
   import Link from '../src/Link';
 
-  const useStyles = makeStyles(theme => ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-      margin: theme.spacing(2),
-    },
-  }));
+  const useStyles = makeStyles(theme => {
+    console.log('THEME', theme)
+    return ({
+      root: {
+        flexGrow: 1,
+      },
+      paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+        margin: theme.spacing(2),
+      },
+      section: {
+        // backgroundColor: theme.palette.primary.main,
+        margin: theme.spacing(5),
+      }
+    })
+  });
 
   export default function Index () {
     const styles = useStyles()
@@ -72,13 +79,13 @@ module.exports = async ({ destination, schema }) => {
           <hr />
           <Grid container spacing={3}>
 
-            <Grid item xs={12}>
+            <Grid item xs>
               <Typography variant="h4" component="h1" gutterBottom>
                 Create Form Component(s)
               </Typography>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs>
                ${getComponentStrings(schema)}
             </Grid>
           </Grid>
