@@ -1,4 +1,4 @@
-# Instantly Generate Rest & GraphQL APIs 🔥
+# Rest/GraphQL APIs + React Components Generator 🔥
 
 [![Follow on Twitter](https://img.shields.io/twitter/follow/andrewpierno.svg?label=follow)](https://twitter.com/andrewpierno)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/sugarkubes/generators.svg)](http://isitmaintained.com/project/sugarkubes/generators "Average time to resolve an issue")
@@ -9,6 +9,7 @@
 
 ![Sugar Generator - API Edition](https://github.com/sugarkubes/generators/blob/master/logo.png?raw=true)
 
+[![App Demo](https://img.youtube.com/vi/E7_ABK7nZT8/0.jpg)](https://www.youtube.com/watch?v=E7_ABK7nZT8)
 
 # Quick Start
 
@@ -66,6 +67,31 @@ APP:
   - pagination
   - edit item
   - create item
+
+
+### Start the API
+
+```sh
+cd ./my-monkeys/api
+npm i
+npm run start
+
+# http://localhost:7777
+```
+
+### Start the APP
+
+```sh
+cd ./my-monkeys/app
+npm i
+npm run dev
+
+# http://localhost:3000
+```
+
+### Behold Magic
+
+![SugarKubes Generated App](https://github.com/sugarkubes/generators/blob/master/table-component.png?raw=true)
 
 # Links
 
