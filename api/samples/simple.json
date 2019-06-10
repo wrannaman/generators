@@ -4,7 +4,7 @@
       "type": "String",
       "default": ""
     },
-    "isDead": {
+    "alive": {
       "type": "Boolean",
       "default": false
     },
@@ -12,6 +12,5 @@
       "type": "Number",
       "default": false
     }
-  },
-  "statics": {}
+  }
 }
