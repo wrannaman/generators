@@ -24,7 +24,8 @@ module.exports = ({ schema, destination, name }) => {
     });
     fs.writeFileSync(indexFile, indexCode({ names }));
   } else {
-    const routerFile = `${modelFolder}/${name}.js`;
+    const routerFile = `${modelFolder}/${schema.name}.js`;
+    console.log('ROUTERFILE', routerFile)
     fs.writeFileSync(routerFile, routerCode({ name: schema.name }));
     fs.writeFileSync(indexFile, indexCode({ names: [schema.name] }));
   }

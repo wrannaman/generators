@@ -12,7 +12,7 @@ module.exports = ({ schema, destination, logging, flavor }) => {
   if (isArray) {
     schema.forEach((s) => names.push(uppercase(s.name)));
   } else {
-    names.push(schema.name);
+    names.push(uppercase(schema.name));
   }
   const modelFolder = `${destination}`;
   const indexFile = `${modelFolder}/index.js`;
