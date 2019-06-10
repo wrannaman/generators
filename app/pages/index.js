@@ -46,7 +46,6 @@ module.exports = async ({ destination, schema }) => {
   import Link from '../src/Link';
 
   const useStyles = makeStyles(theme => {
-    console.log('THEME', theme)
     return ({
       root: {
         flexGrow: 1,
