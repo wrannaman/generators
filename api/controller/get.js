@@ -32,7 +32,14 @@ module.exports = ({ schema, logging, destination, name }) => {
     `*     schema:`,
     `*       type: integer`,
     `*   - in: query`,
-    `*     name: sort`,
+    `*     name: filters`,
+    `*     description: Filters to search on specific 'columns'`,
+    `*     style: deepObject`,
+    `*     schema:`,
+    `*       type: object`,
+    `*       example: 'stringified array [{"column":{"title":"Name","field":"name","type":"…Sort":"asc","id":0}},"operator":"=","value":"1"}]'`,
+    `*   - in: query`,
+    `*     name: orderBy`,
     `*     style: deepObject`,
     `*     description: object containing how to sort the items`,
     `*     schema:`,
@@ -71,13 +78,45 @@ module.exports = ({ schema, logging, destination, name }) => {
   const func = [
     `module.exports = async (req, res) => {`,
     `  try {`,
-    `    const { ${extraKeys.join(', ')}} = req.query;`,
+    `    let { ${extraKeys.join(', ')}} = req.query;`,
     `    const { ${schemaKeys.join(', ')}} = req.query;`,
-    // `    console.log('req query ', req.query);`,
+    `    console.log('req query ', req.query);`,
     `    // The model query`,
     `    const find = {};`,
-    `    // pagination object (search, sort, filter, etc)`,
-    `    const where = {};`,
+    `    let parsedFilters = null;`,
+    `    // pagination object (search, sort, filter, etc);
+        const where = {};
+        if (filters && filters !== '[]') {
+         parsedFilters = JSON.parse(filters);
+         console.log('PARSEDFILTERS', parsedFilters)
+
+          parsedFilters.forEach((f) => {
+            let regexValue = {};
+            console.log('F.COLUMN.TYPE', f.column.type)
+            if (f.column.type === 'boolean') {
+              regexValue = f.value === 'checked' ? true : false;
+            } else if (Array.isArray(f.value) && f.value.length > 0) {
+              console.log('its an enum');
+              if (f.column.type === 'string') {
+                regexValue = { $in: [] };
+                f.value.forEach((val) => {
+                  regexValue.$in.push(val)
+                });
+              } else {
+                regexValue = { $or: [] };
+                f.value.forEach((val) => {
+                  regexValue.$or.push({ $eq: val });
+                });
+              }
+            } else if (f.column.type === 'numeric' || f.column.type === 'number') {
+              regexValue = { $eq: f.value };
+            } else {
+              regexValue = { $regex: new RegExp(f.value, "ig")};
+            }
+            if (JSON.stringify(regexValue) !== '{}') find[f.column.field] = regexValue;
+          });
+    `,
+    `    }`
   ];
   const end = [
     `    `,
@@ -103,8 +142,8 @@ module.exports = ({ schema, logging, destination, name }) => {
   ];
   const save = [
     `// save`,
-    // `console.log('find ', find);`,
-    // `console.log('where', where);`,
+    `console.log('find ', find);`,
+    `console.log('where', where);`,
     `const ${name} = await ${uppercase(name)}.paginate(find, where); // @TODO populate: '<model name>'`,
     `return res.json({ ${name}s: ${name} });`
   ];

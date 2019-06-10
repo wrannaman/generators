@@ -10,6 +10,7 @@ module.exports = (schema) => {
   const extraKeys = Object.keys(extras);
   if (extraKeys.length > 0) {
     code.push('// Pagination ');
+    code.push(`if (sort && typeof sort === 'string') sort = JSON.parse(sort);`)
     extraKeys.forEach(key => {
       code.push(`if (typeof ${key} !== 'undefined') {`);
       code.push(`where.${key} = ${returnValueBasedOnType(extras[key].type, key)};`);

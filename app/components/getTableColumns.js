@@ -3,7 +3,6 @@ const { uppercase } = require('../../api/utils');
 
 module.exports = (schema, stringify = false, keysOnly = false) => {
   const columns = [];
-  console.log('SCHEMA', schema)
   const keys = Object.keys(schema.schema);
   keys.forEach((k) => {
     const _type = schema.schema[k].type;
@@ -19,12 +18,18 @@ module.exports = (schema, stringify = false, keysOnly = false) => {
         default:
 
       }
+      let title = uppercase(k);
+      if (schema.schema[k].required) title += '*';
       const obj = {
-        title: uppercase(k),
+        title,
         field: k,
         type,
-        readonly: false // schema.schema[k].unique ? false : true
+        readonly: false, // schema.schema[k].unique ? false : true
+        // customFilterAndSearch: "this.customFilterAndSearch",
       };
+      if (schema.schema[k].default) {
+        obj.emptyValue = schema.schema[k].default;
+      }
       if (schema.schema[k].enum) {
         obj.lookup = {};
         schema.schema[k].enum.forEach(item => obj.lookup[item] = uppercase(item));
@@ -40,12 +45,20 @@ module.exports = (schema, stringify = false, keysOnly = false) => {
             break;
           default:
         }
-        columns.push({
-          title: `${uppercase(k)} ${uppercase(_key)}`,
+
+        let _title = `${uppercase(k)} ${uppercase(_key)}`;
+        if (schema.schema[k][_key].required) _title += '*';
+        const _obj = {
+          title: _title,
           field: `${k}.${_key}`,
           type: subType,
-          readonly: schema.schema[k][_key].unique ? true : false
-        });
+          readonly: schema.schema[k][_key].unique ? true : false,
+          // customFilterAndSearch: "this.customFilterAndSearch",
+        };
+        if (schema.schema[k][_key].default) {
+          _obj.emptyValue = schema.schema[k].default;
+        }
+        columns.push(_obj);
       });
     }
   });

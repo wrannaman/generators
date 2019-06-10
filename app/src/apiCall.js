@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 module.exports = async (file) => {
-  const fileName = `${file}/src/apiCall.js`
+  const fileName = `${file}/src/apiCall.js`;
   const code = `
   import fetch from 'isomorphic-unfetch';
   const queryString = require('query-string');
@@ -12,6 +12,16 @@ module.exports = async (file) => {
     // Default options are marked with *
     let stringified = "";
     if (params) {
+      Object.keys(params).forEach((param) => {
+        if (param === 'orderBy' && params[param]) {
+          const orderBy = {};
+          orderBy[params[param].field] = params.orderDirection;
+          delete params.orderDirection;
+          delete params.orderBy;
+          params.sort = JSON.stringify(orderBy);
+        }
+        if (typeof params[param] === 'object') params[param] = JSON.stringify(params[param]);
+      })
       stringified = \`?\${queryString.stringify(params)}\`;
     }
     const fetchObject = {

@@ -66,8 +66,6 @@ const tableIcons = {
 
 class ${uppercase(schema.name)}Table extends Component {
 
-
-
     constructor(props) {
       super(props);
       this.state = ${getReactState(schema, true)}
@@ -105,14 +103,12 @@ class ${uppercase(schema.name)}Table extends Component {
     }
 
     onRowAdd = async (newData) => {
-      console.log('NEWDATA', newData)
       const res = await apiCall({ url: "${schema.name}", method: 'POST', data: newData });
       if (!res.error) this.setState({ snackbar: { variant: 'success', message: '${uppercase(schema.name)} Created.' }});
       else this.setState({ snackbar: { variant: 'error', message: res.error }});
     }
     onRowUpdate = async (newData, oldData) => {
       const res = await apiCall({ url: \`${schema.name}/\${oldData._id}\`, method: 'PUT', data: newData });
-      console.log('update', res)
       if (!res.error) this.setState({ snackbar: { variant: 'success', message: '${uppercase(schema.name)} Updated.' }});
       else this.setState({ snackbar: { variant: 'error', message: res.error }});
     }
@@ -148,7 +144,14 @@ class ${uppercase(schema.name)}Table extends Component {
                   selection: false,
                   exportButton: true
                 }}
-                ref={this.tableRef}
+                tableRef={this.tableRef}
+                localization={{
+                  body: {
+                    editRow: {
+                      deleteText: 'Delete this row?'
+                    }
+                  }
+                }}
                 editable={{
                   onRowAdd: this.onRowAdd,
                   onRowUpdate: this.onRowUpdate,
