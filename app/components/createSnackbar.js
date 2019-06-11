@@ -92,7 +92,7 @@ class SharedSnackbar extends Component {
             </span>
           }
           action={[
-            <IconButton key="close" aria-label="Close" color="inherit" onClick={onClose}>
+            <IconButton key="close" aria-label="Close" color="inherit" onClick={handleClose}>
               <CloseIcon className={classes.icon} />
             </IconButton>,
           ]}

@@ -3,5 +3,5 @@
 ```sh
 NODE_ENV=dev nodemon index.js \
 --schema ./api/samples/multi.json \
---destination /var/andrew/generator-tests/7
+--destination /var/andrew/generator-tests/8
 ```

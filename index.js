@@ -4,6 +4,7 @@ const { ArgumentParser } = require('argparse');
 const { validateSchema } = require('./api/utils');
 const makeApi = require('./api/makeAPI');
 const makeApp = require('./app/makeApp');
+const makeEmbeddable = require('./embeddable/makeEmbeddable');
 
 const parser = new ArgumentParser({
   version: require('./package.json').version,
@@ -78,6 +79,7 @@ const validSchema = validateSchema(args.schema);
 if (validSchema === true) {
   makeApi(Object.assign({}, args, { destination: `${args.destination}/api` }));
   makeApp(Object.assign({}, args, { destination: `${args.destination}/app` }));
+  makeEmbeddable(Object.assign({}, args, { destination: `${args.destination}/embeddable` }));
 } else {
   console.error('Error => invalid schema.', validSchema);
 }
