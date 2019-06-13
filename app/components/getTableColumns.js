@@ -24,7 +24,7 @@ module.exports = (schema, stringify = false, keysOnly = false) => {
         title,
         field: k,
         type,
-        readonly: false, // schema.schema[k].unique ? false : true
+        readonly: schema.schema[k].unique ? true : false
         // customFilterAndSearch: "this.customFilterAndSearch",
       };
       if (schema.schema[k].default) {

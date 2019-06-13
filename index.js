@@ -81,5 +81,5 @@ if (validSchema === true) {
   makeApp(Object.assign({}, args, { destination: `${args.destination}/app` }));
   makeEmbeddable(Object.assign({}, args, { destination: `${args.destination}/embeddable` }));
 } else {
-  console.error('Error => invalid schema.', validSchema);
+  console.error('Error => invalid schema.', validSchema === false ? '' : validSchema);
 }

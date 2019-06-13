@@ -16,6 +16,16 @@ module.exports = (schema) => {
     }
     return false;
   } catch (e) {
+    if (e.message && e.message.indexOf('Unexpected token')) {
+      let msg = e.message.split('Unexpected token');
+      if (msg && msg[1]) {
+        msg = msg[1].split('at position ');
+        return `Uh oh, JSON syntax mistake. Check line ${msg[1]}.`;
+      }
+    }
+    if (e.message && e.message.indexOf('Cannot find module') !== -1) {
+      return "Can't find this json file. Does it exist?";
+    }
     return false;
   }
 };

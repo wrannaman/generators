@@ -2,6 +2,6 @@
 
 ```sh
 NODE_ENV=dev nodemon index.js \
---schema ./api/samples/multi.json \
---destination /var/andrew/generator-tests/8
+--schema ./api/samples/user-can.json \
+--destination /Users/andrewpierno/Desktop/personal/dev/sugar_projects/user-can
 ```

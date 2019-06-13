@@ -4,6 +4,7 @@ const { uppercase } = require('../../api/utils');
 const getReactState = require('./getReactState');
 const getTableColumns = require('./getTableColumns');
 const textFieldsByType = require('./textFieldsByType');
+const beautify = require('js-beautify').html;
 
 module.exports = async ({ destination, schema }) => {
   const dir = `${destination}/components/${uppercase(schema.name)}`;

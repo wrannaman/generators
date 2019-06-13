@@ -9,6 +9,15 @@ const replaceStringValues = (str) => {
   str = str.replace(/"Number"/g, "Number");
   str = str.replace(/"number"/g, "Number");
   str = str.replace(/"ObjectId"/g, "Schema.Types.ObjectId");
+  str = str.replace(/"default"/g, "default");
+  str = str.replace(/"type"/g, "type");
+  str = str.replace(/"htmlType"/g, "htmlType");
+  str = str.replace(/"unique"/g, "unique");
+  str = str.replace(/"trim"/g, "trim");
+  str = str.replace(/"required"/g, "required");
+  str = str.replace(/"immutable"/g, "immutable");
+  str = str.replace(/"enum"/g, "enum");
+
   return str;
 };
 
@@ -38,6 +47,24 @@ const doMakeSchema = ({ schema, destination }) => {
       value = JSON.stringify(schema.schema[key]);
       value = replaceStringValues(value);
       code.push(`  ${key}: ${value},`);
+    } else if (Array.isArray(schema.schema[key])) {
+      code.push(`  ${key}: [`);
+      schema.schema[key].forEach((item) => {
+        if (item.type) {
+          value = JSON.stringify(item);
+          value = replaceStringValues(value);
+          code.push(`${value}`);
+        } else {
+          let _value = "{}";
+          Object.keys(item).forEach(_key => {
+            code.push(`{ ${_key}: `);
+            _value = JSON.stringify(item[_key]);
+            _value = replaceStringValues(_value);
+            code.push(`${_value}, }`);
+          });
+        }
+      });
+      code.push(`  ],`);
     } else {
       code.push(`  ${key}: {`);
       let _value = {};
@@ -68,8 +95,7 @@ const doMakeSchema = ({ schema, destination }) => {
   code.push(`module.exports = database.model("${uppercase(name)}", schema);`);
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });
   fs.writeFileSync(modelFile, pretty);
-}
-
+};
 
 module.exports = ({ schema, destination}) => {
   schema = require(schema); // eslint-disable-line

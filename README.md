@@ -111,3 +111,14 @@ A fully functioning react table and form with searching sorting filtering, editi
 
 
 [App Documentation (generated front end)](https://github.com/sugarkubes/generators/wiki/APP)
+
+## Experimental Embeddable Components
+
+**What if you could remotely update your components without having to push new code?**
+
+Thats one question we're exploring with the experimental embeddable react components. There are of course cool ways to serve single pages as serverless functions but what's cooler would be a way for even non-technical people to update a database schema and a form or table in real time without writing any code.
+
+
+- Each component comes out in an embeddable format under */embed*
+- TBD - How to easily deploy these and use them.
+-

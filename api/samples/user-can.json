@@ -1,0 +1,83 @@
+[
+  {
+    "name": "user",
+    "schema": {
+      "identifier": {
+        "type": "String",
+        "default": ""
+      },
+      "permissions": {
+        "type": "JSON",
+        "unique": true,
+        "immutable": true
+      },
+      "intro": {
+        "type": "Boolean",
+        "default": false,
+        "htmlType": "boolean"
+      },
+      "sub": {
+        "one": {
+          "type": "String",
+          "trim": true,
+          "required": true
+        },
+        "two": {
+          "type": "String",
+          "required": true
+        },
+        "three": {
+          "type": "Number",
+          "min": 0,
+          "max": 1000,
+          "htmlType": "number"
+        }
+      },
+      "role": {
+        "type": "String",
+        "enum": [
+          "user",
+          "maker"
+        ],
+        "default": "user",
+        "htmlType": "radio"
+      },
+      "carrot": {
+        "type": "String",
+        "enum": [
+          "sweet",
+          "ugly"
+        ],
+        "default": "ugly",
+        "htmlType": "radio"
+      }
+    },
+    "statics": {
+      "statuses": [
+        "created",
+        "under_review",
+        "listed",
+        "deleted"
+      ],
+      "status": {
+        "active": "active",
+        "inactive": "inactive",
+        "deleted": "deleted"
+      }
+    }
+  },
+  {
+    "name": "configuration",
+    "schema": {
+      "name": {
+        "type": "String",
+        "default": ""
+      },
+      "users": {
+        "type": "ObjectId",
+        "ref": "Users",
+        "htmlType": "text"
+      }
+    }
+  }
+]
