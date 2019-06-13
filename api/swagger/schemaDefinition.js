@@ -17,6 +17,22 @@ module.exports = ({ schema, name }) => {
       if (typeof value.unique !== 'undefined') code.push(`            unique: ${value.unique}`);
 
       if (value.required) required.push(key);
+    } else if (Array.isArray(value)) {
+      code.push(`          ${key}:`);
+      code.push(`            type: array`);
+      code.push(`            items:`);
+      value.forEach((val) => {
+        if (val.type) {
+          code.push(`              type: ${safeType(val.type.toLowerCase())}`);
+        } else {
+          Object.keys(val).forEach(_key => {
+            const _value = val[_key];
+            code.push(`                ${_key}:`);
+            code.push(`                  type: ${safeType(_value.type.toLowerCase())}`);
+            if (typeof _value.default !== 'undefined') code.push(`            default: ${safeDefault(_value.default)}`);
+          });
+        }
+      });
     } else {
       code.push(`          ${key}:`);
       code.push(`            type: object`);

@@ -12,6 +12,7 @@ const fo = (schema, asString = false, parseSchema = true) => {
   // into string
   const str = [];
   Object.keys(fakeObject).forEach(key => {
+
     const value = schema[key].type === 'String' ? `"${fakeObject[key]}"` : fakeObject[key];
     const isObject = typeof value === 'object';
     let abstractedValue = value;
@@ -19,13 +20,11 @@ const fo = (schema, asString = false, parseSchema = true) => {
       if (asString) {
         const _str = [];
         Object.keys(value).forEach(_key => {
-          _str.push(`${_key}: ${value[_key]}`)
-        })
-        abstractedValue = `" ${_str.join(', ')} "`
+          _str.push(`${_key}: ${value[_key]}`);
+        });
+        abstractedValue = `" ${_str.join(', ')} "`;
       }
-
     }
-
     str.push(`${key}: ${abstractedValue}`);
   });
   return { obj: fakeObject, str: str.join(', ') };

@@ -36,7 +36,7 @@ module.exports = ({ originalSchema, schema, destination, logging, }) => {
 
 
   const genData = (type, value, isEnum = false) => {
-    if (isEnum) return value[0];
+    if (isEnum) return isEnum[0];
     if (!type) {
       return subDocHelper(value);
     }
@@ -57,32 +57,56 @@ module.exports = ({ originalSchema, schema, destination, logging, }) => {
 
   const subDocHelper = (obj) => {
     if (!obj) throw new Error('subdocument is undefined');
-    const fake = {};
-    Object.keys(obj).forEach(key => {
-      fake[key] = genData(obj[key].type);
-    });
+    let fake = {};
+    if (Array.isArray(obj)) {
+      fake = [];
+      obj.forEach((o) => {
+        if (o.type) {
+          fake.push(genData(o.type));
+        } else {
+          Object.keys(o).forEach(key => {
+            fake.push({ [key]: genData(o[key].type) });
+          });
+        }
+      });
+    } else {
+      Object.keys(obj).forEach(key => {
+        fake[key] = genData(obj[key].type);
+      });
+    }
     return fake;
   };
 
   const fakeObject = (schema, asString = false) => {
-    const fake = {};
+    const fakeObject = {};
     Object.keys(schema).forEach((key) => {
-      fake[key] = genData(schema[key].type, schema[key], schema[key].enum);
+      fakeObject[key] = genData(schema[key].type, schema[key], schema[key].enum);
     });
 
-    if (!asString) return fake;
+    if (!asString) return fakeObject;
 
     // into string
     const str = [];
-    Object.keys(fake).forEach(key => {
-      const value = schema[key].type === 'String' ? \`"\${fake[key]}"\` : fake[key];
-      str.push(\`\${key}: \${value}\`);
+    Object.keys(fakeObject).forEach(key => {
+
+      const value = schema[key].type === 'String' ? \`"\${fakeObject[key]}"\` : fakeObject[key];
+      const isObject = typeof value === 'object';
+      let abstractedValue = value;
+      if (isObject) {
+        if (asString) {
+          const _str = [];
+          Object.keys(value).forEach(_key => {
+            _str.push(\`\${_key}: \${value[_key]}\`);
+          });
+          abstractedValue = \`" \${_str.join(', ')} "\`;
+        }
+      }
+      str.push(\`\${key}: \${abstractedValue}\`);
     });
-    return { obj: fake, str: str.join(', ') };
   };
 
   describe('REST: ${uppercase(name)}', () => {
-    beforeEach((done) => {
+    before((done) => {
       ${uppercase(name)}.deleteMany({}, () => {})
       setTimeout(() => {
         [1,2,3,4,5].forEach(() => {

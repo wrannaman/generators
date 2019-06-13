@@ -54,7 +54,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   const permissions = [
     ``,
     `// @TODO Permissions`,
-    `const permission = userCan('${action}', '${name}', req.user, req.body, req.query, req.params);`,
+    `const permission = userCan('${action}', '${name}', { user: req.user, body: req.body, params: req.params, query: req.query });`,
     `if (!permission) throw new Error('Permission denied for userCan ${action} ${name}');`,
     ``
   ];

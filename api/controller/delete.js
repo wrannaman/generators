@@ -36,7 +36,9 @@ module.exports = ({ schema, logging, destination, name }) => {
     "*/",
   ];
   const schemaKeys = Object.keys(schema.schema);
-  const validate = createUpdateCode(schema.schema, name);
+  // const validate = createUpdateCode(schema.schema, name);
+  const validate = [];
+
   const func = [
     `module.exports = async (req, res) => {`,
     `  try {`,
@@ -55,7 +57,7 @@ module.exports = ({ schema, logging, destination, name }) => {
   const permissions = [
     ``,
     `// @TODO Permissions`,
-    `const permission = userCan('${action}', '${name}', req.user, req.body, req.query, req.params);`,
+    `const permission = userCan('${action}', '${name}', { user: req.user, body: req.body, params: req.params, query: req.query });`,
     `if (!permission) throw new Error('Permission denied for userCan ${action} ${name}');`,
     ``
   ];
@@ -68,8 +70,8 @@ module.exports = ({ schema, logging, destination, name }) => {
   ];
   const save = [
     `// save`,
-    `const updated = await existing${uppercase(name)}.delete()`,
-    `return res.json({ ${name}: updated });`
+    `const deleted = await existing${uppercase(name)}.delete();`,
+    `return res.json({ ${name}: deleted });`
   ];
   code = code.concat(top, swagger, func, validate, permissions, safeArea, save, end);
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });

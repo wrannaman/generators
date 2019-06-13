@@ -1,24 +1,36 @@
 const uppercase = require('./uppercase');
 const beautify = require('js-beautify').js;
 
-const searchCodeByType = (type, key) => {
+const searchCodeByType = (type, key, isArray = false) => {
   const returnCode = [];
+
   switch (type.toLowerCase()) {
     case 'number':
-      returnCode.push(`if (!isNaN(search)) { find.$or.push({ ${key}: { $eq: search } }); }`);
+      if (isArray) {
+        returnCode.push(`if (!isNaN(search)) { find.$or.push({ ${key}: { $in: [search] } }); }`);
+      } else {
+        returnCode.push(`if (!isNaN(search)) { find.$or.push({ ${key}: { $eq: search } }); }`);
+      }
       break;
     case 'boolean':
-      returnCode.push(`if (search === 'true' || search === 'false') { find.$or.push({ ${key}: search === 'true' ? true : false }); }`);
+      if (isArray) {
+        returnCode.push(`if (search === 'true' || search === 'false') { find.$or.push({ ${key}: { $in: [search === 'true' ? true : false] } }); }`);
+      } else {
+        returnCode.push(`if (search === 'true' || search === 'false') { find.$or.push({ ${key}: search === 'true' ? true : false }); }`);
+      }
       break;
     case 'objectid':
     case 'string':
-      returnCode.push(`find.$or.push({ ${key}: { $regex: new RegExp(search, "ig") } })`);
+      if (isArray) {
+        returnCode.push(`find.$or.push({ ${key}: { $in: [$regex: new RegExp(search, "ig")] } })`);
+      } else {
+        returnCode.push(`find.$or.push({ ${key}: { $regex: new RegExp(search, "ig") } })`);
+      }
       break;
     default:
   }
-
-  return returnCode
-}
+  return returnCode;
+};
 
 module.exports = (schema, name) => {
   let code = ['find.$or = [];'];
@@ -26,10 +38,21 @@ module.exports = (schema, name) => {
     const item = schema.schema[key];
     if (item.type) {
       code = code.concat(searchCodeByType(item.type, key));
+    } else if (Array.isArray(item)) {
+      item.forEach((i) => {
+        if (i.type) {
+          code = code.concat(searchCodeByType(i.type, `${key}`, true));
+        } else {
+          Object.keys(i).forEach((_key) => {
+            code = code.concat(searchCodeByType(i[_key].type, `"${key}.${_key}"`));
+          });
+        }
+      })
+
     } else {
       Object.keys(item).forEach((_key) => {
         code = code.concat(searchCodeByType(item[_key].type, `"${key}.${_key}"`));
-      })
+      });
     }
   });
   const pretty = beautify(code.join('\n'), { indent_size: 2, space_in_empty_paren: true });
