@@ -78,9 +78,9 @@ const validSchema = validateSchema(args.schema);
 
 if (validSchema === true) {
   makeApi(Object.assign({}, args, { destination: `${args.destination}/api` }));
-  // makeApp(Object.assign({}, args, { destination: `${args.destination}/app` }));
+  makeApp(Object.assign({}, args, { destination: `${args.destination}/app` }));
   // makeEmbeddable(Object.assign({}, args, { destination: `${args.destination}/embeddable` }));
-  console.log('not making app or embeddable');
+  console.log('not making embeddable');
 } else {
   console.error('Error => invalid schema.', validSchema === false ? '' : validSchema);
 }

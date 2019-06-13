@@ -6,12 +6,29 @@ module.exports = (schema, stringify = false, keysOnly = false) => {
   Object.keys(schema.schema).forEach((key) => {
     let val = "";
     if (!schema.schema[key].type) {
-      val = {};
-      Object.keys(schema.schema[key]).forEach((_key) => {
-        val[_key] = schema.schema[key][_key].default ? schema.schema[key][_key].default : typeToValue(schema.schema[key][_key].type);
-        if (!nestedKeys[key]) nestedKeys[key] = [];
-        nestedKeys[key].push(_key);
-      });
+      if (Array.isArray(schema.schema[key])) {
+        val = [];
+        schema.schema[key].forEach((arrayObject, index) => {
+
+          if (arrayObject.type) {
+            const item = schema.schema[key][index];
+            val.push(item.default ? item.default : typeToValue(item.type));
+          } else {
+            const _sub = {};
+            Object.keys(arrayObject).forEach((_key) => {
+              _sub[key] = arrayObject[_key].default ? arrayObject[_key].default : typeToValue(arrayObject[_key].type);
+            });
+          }
+        });
+      } else {
+        val = {};
+        Object.keys(schema.schema[key]).forEach((_key) => {
+          val[_key] = schema.schema[key][_key].default ? schema.schema[key][_key].default : typeToValue(schema.schema[key][_key].type);
+          if (!nestedKeys[key]) nestedKeys[key] = [];
+          nestedKeys[key].push(_key);
+        });
+      }
+
     } else {
       val = schema.schema[key].default ? schema.schema[key].default : typeToValue(schema.schema[key].type);
     }
