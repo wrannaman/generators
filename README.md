@@ -26,6 +26,7 @@ npm i -g sugar-generate
 
 ```json
 {
+  "name": "monkey",
   "schema": {
     "name": {
       "type": "String",
