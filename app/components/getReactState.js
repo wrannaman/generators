@@ -9,13 +9,14 @@ module.exports = (schema, stringify = false, keysOnly = false) => {
       if (Array.isArray(schema.schema[key])) {
         val = [];
         schema.schema[key].forEach((arrayObject, index) => {
-
           if (arrayObject.type) {
             const item = schema.schema[key][index];
+            obj[`${key}StringValue`] = item.default ? item.default : typeToValue(item.type);
             val.push(item.default ? item.default : typeToValue(item.type));
           } else {
             const _sub = {};
             Object.keys(arrayObject).forEach((_key) => {
+              obj[`${_key}StringValue`] = typeToValue(arrayObject[_key].type);
               _sub[key] = arrayObject[_key].default ? arrayObject[_key].default : typeToValue(arrayObject[_key].type);
             });
           }

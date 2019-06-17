@@ -66,6 +66,18 @@ module.exports = (name, type, fullObject) => {
         </div>
 
       `;
+    case 'Array':
+      return `
+      <ChipForm
+        label={${name}}
+        value={this.state.${name}StringValue}
+        items={this.state.${name}}
+        onChange={this.handleChange("${name}StringValue", 'string')}
+        chipDelete={this.chipDelete("${name}")}
+        chipClick={this.chipClick("${name}")}
+        onChipAddClick={this.onChipAddClick("${name}")}
+      />
+      `;
     default:
 
   }

@@ -11,6 +11,7 @@ module.exports = async ({ destination }) => {
 
   const code = `
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
@@ -30,15 +31,18 @@ class ${componentName} extends Component {
   render() {
     const { classes, items } = this.props;
     return (
-      {items.map((itemString, index) => (
-        <Chip
-        key={\`\${itemString}-\${index}\`}
-        label={itemString}
-        className={classes.chip}
-        onClick={this.props.chipClick}
-        onDelete={this.props.chipDelete}
-        variant="outlined" />
-      ))}
+      <div>
+        {items.map((itemString, index) => (
+          <Chip
+          key={\`\${itemString}-\${index}\`}
+          label={typeof itemString === 'string' ? itemString : JSON.stringify(itemString)}
+          className={classes.chip}
+          onClick={this.props.chipClick(itemString)}
+          onDelete={this.props.chipDelete(itemString, index)}
+          color="secondary"
+          variant="outlined" />
+        ))}
+      </div>
     )
   }
 

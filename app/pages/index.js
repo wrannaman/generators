@@ -78,7 +78,7 @@ export default function Index () {
               Create Form Component(s)
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item style={{ maxWidth: '100%' }}>
              ${getComponentStrings(schema)}
           </Grid>
         </Grid>

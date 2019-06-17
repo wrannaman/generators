@@ -8,9 +8,9 @@ module.exports = (schema, destination) => {
     if (schema.schema[key].type) {
       code.push(textFieldByType(key, schema.schema[key].type, schema.schema[key]));
     } else if (Array.isArray(schema.schema[key])) {
-      console.warn('UNIMPLEMENTED SUB ARRAY ya array ');
+      console.warn('UNIMPLEMENTED SUB ARRAY ya array ', key);
       // if it's an array of strings, tags work great.
-      // create a file for a chip component
+      code.push(textFieldByType(key, 'Array', schema.schema[key]));
     } else {
       Object.keys(schema.schema[key]).forEach((_key) => {
         code.push(textFieldByType(`${key}.${_key}`, schema.schema[key][_key].type, schema.schema[key][_key]));

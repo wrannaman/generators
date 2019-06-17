@@ -92,6 +92,14 @@ class ${uppercase(schema.name)}Table extends Component {
       query.limit = query.pageSize || 10;
       const res = await apiCall({ url: '${schema.name}s', method: 'GET', params: query });
 
+      // prevent arrays from blowing the page
+      res.${schema.name}s.docs = res.${schema.name}s.docs.map((doc) => {
+        const _doc = Object.assign({}, doc);
+        Object.keys(_doc).forEach((key) => {
+          if (Array.isArray(_doc[key])) _doc[key] = JSON.stringify(_doc[key]);
+        });
+        return _doc;
+      })
       return {
         data: res.${schema.name}s.docs,
         page: res.${schema.name}s.offset / res.${schema.name}s.limit,

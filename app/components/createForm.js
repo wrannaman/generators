@@ -33,6 +33,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormLabel from '@material-ui/core/FormLabel';
 
 import Snackbar from '../Shared/Snackbar';
+import ChipForm from '../Shared/ChipForm';
 
 const styles = theme => ({
   container: {
@@ -136,11 +137,29 @@ class Create${uppercase(schema.name)}Form extends Component {
     }
   }
 
+  chipClick = (name) => (value) => (event) => {
+    console.log('chip click ', name, value, event);
+  }
+
+  chipDelete = (name) => (value, index) => (event) => {
+    const copy = this.state[name].slice();
+    copy.splice(index, 1);
+    console.log('COPY', copy)
+    this.setState({ [name]: copy });
+  }
+
   errorString = (e) => {
     const snackbar = Object.assign({}, this.state);
     snackbar.variant = 'error';
     snackbar.message = e.message ? e.message : e
     this.setState({ snackbar });
+  }
+
+  onChipAddClick = (name) => (e) => {
+    console.log('on chip add click  ', name, this.state[\`\${name}StringValue\`]);
+    const _copy = this.state[\`\${name}\`];
+    _copy.push(this.state[\`\${name}StringValue\`]);
+    this.setState({ [\`\${name}StringValue\`]: "", [name]: _copy });
   }
 
   submit = async (e) => {
