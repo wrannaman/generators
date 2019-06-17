@@ -60,19 +60,19 @@ parser.addArgument(
 );
 
 parser.addArgument(
-  ['-d', '--destination'],
+  ['-o', '--output'],
   {
-    help: 'destination',
-    metavar: "destination",
+    help: 'where will the generated code go?',
+    metavar: "output",
     dest: "destination",
-    defaultValue: __dirname,
+    // defaultValue: __dirname,
   }
 );
 
 const args = parser.parseArgs();
 
 args.schema = path.join(process.cwd(), args.schema);
-args.destination = args.destination;
+args.destination = path.join(process.cwd(), args.destination);
 
 const validSchema = validateSchema(args.schema);
 

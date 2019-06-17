@@ -41,7 +41,7 @@ module.exports = (name, type, fullObject) => {
                  type="${textFieldType}"
                  variant="outlined"
                  onChange={this.handleChange("${name}", '${type.toLowerCase()}')}
-                 value={this.state.${name}}
+                 value={this.state${name}}
                />`;
     case 'Boolean':
       return `

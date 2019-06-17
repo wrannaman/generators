@@ -166,7 +166,7 @@ class Create${uppercase(schema.name)}Form extends Component {
       <div className={classes.container}>
         <form onSubmit={this.submit} className={classes.form}>
           <FormGroup className={classes.fields}>
-            ${textFieldsByType(schema)}
+            ${textFieldsByType(schema, destination)}
           </FormGroup>
           <Button
             type="submit"

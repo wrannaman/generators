@@ -1,6 +1,7 @@
 const createForm = require('./createForm');
 const createSnackbar = require('./createSnackbar');
 const createTable = require('./createTable');
+const createChipComponent = require('./createChipComponent');
 
 module.exports = ({ schema, destination }) => {
   schema = require(schema); // eslint-disable-line
@@ -15,4 +16,5 @@ module.exports = ({ schema, destination }) => {
   }
 
   createSnackbar({ destination, schema });
+  createChipComponent({ destination, schema });
 };
