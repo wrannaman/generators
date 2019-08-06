@@ -1,0 +1,64 @@
+{
+  "name": "app",
+  "schema": {
+    "name": {
+      "type": "String",
+      "required": true
+    },
+    "env_vars": {
+      "type": "JSON",
+      "default": {}
+    },
+    "networks": [{
+      "type": "String",
+      "trim": true,
+      "min": [2, "value is too short"],
+      "max": 100
+    }],
+    "project": {
+      "type": "ObjectID",
+      "ref": "Project",
+      "required": true
+    },
+    "status": {
+      "type": "String",
+      "enum": ["active", "inactive", "deleted"],
+      "default": "active"
+    },
+    "starting_ports": [{
+      "type": "Number",
+      "trim": true,
+      "min": [2, "value is too short"],
+      "max": 100
+    }],
+    "docker_image": {
+      "type": "String",
+      "trim": true,
+      "min": [2, "value is too short"],
+      "max": 100
+    },
+    "containers_per_device": {
+      "type": "Number",
+      "trim": true,
+      "default": 1,
+      "min": [2, "value is too short"],
+      "max": 100
+    },
+    "volumes": [{
+      "type": "String",
+      "trim": true,
+      "min": [2, "value is too short"],
+      "max": 100
+    }],
+    "devices": [{
+      "type": "String",
+      "trim": true,
+      "min": [2, "value is too short"],
+      "max": 100
+    }],
+    "privileged": {
+      "type": "Bool",
+      "default": false
+    }
+  }
+}

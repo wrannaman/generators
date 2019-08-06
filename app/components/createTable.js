@@ -147,7 +147,7 @@ class ${uppercase(schema.name)}Table extends Component {
                 columns={${getTableColumns(schema)}}
                 data={this.fetchData}
                 icons={tableIcons}
-                title="${uppercase(schema.name)} Table"
+                title="${uppercase(schema.name)}s"
                 options={{
                   filtering: true,
                   selection: false,

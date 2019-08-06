@@ -22,7 +22,8 @@ const searchCodeByType = (type, key, isArray = false) => {
     case 'objectid':
     case 'string':
       if (isArray) {
-        returnCode.push(`find.$or.push({ ${key}: { $in: [$regex: new RegExp(search, "ig")] } })`);
+        console.log('ISARRAY', isArray, key)
+        returnCode.push(`find.$or.push({ ${key}: { $in: [search] } })`);
       } else {
         returnCode.push(`find.$or.push({ ${key}: { $regex: new RegExp(search, "ig") } })`);
       }

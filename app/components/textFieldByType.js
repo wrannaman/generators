@@ -41,7 +41,7 @@ module.exports = (name, type, fullObject) => {
                  type="${textFieldType}"
                  variant="outlined"
                  onChange={this.handleChange("${name}", '${type.toLowerCase()}')}
-                 value={this.state${name}}
+                 value={this.state.${name}}
                />`;
     case 'Boolean':
       return `
@@ -69,7 +69,7 @@ module.exports = (name, type, fullObject) => {
     case 'Array':
       return `
       <ChipForm
-        label={${name}}
+        label={"${name}"}
         value={this.state.${name}StringValue}
         items={this.state.${name}}
         onChange={this.handleChange("${name}StringValue", 'string')}

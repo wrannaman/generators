@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const {
   serverIndex,
-  userCan,
+  // userCan,
   dockerFile,
   writePackageJSON,
   writeEslint,
@@ -39,7 +39,7 @@ module.exports = async (args) => {
   await makeSwaggerModelDefinitions(args);
   await makeRouter(args);
   await serverIndex(args);
-  await userCan(args);
+  // await userCan(args);
   await dockerFile(args);
   await writePackageJSON(args);
   await writeEslint(args);

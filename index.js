@@ -2,7 +2,7 @@
 const path = require('path');
 const { ArgumentParser } = require('argparse');
 const { validateSchema } = require('./api/utils');
-const makeApi = require('./api/makeAPI');
+const makeAPI = require('./api/makeAPI');
 const makeApp = require('./app/makeApp');
 const makeEmbeddable = require('./embeddable/makeEmbeddable');
 
@@ -70,6 +70,7 @@ parser.addArgument(
 );
 
 const args = parser.parseArgs();
+console.log('ARGS', args)
 
 args.schema = path.join(process.cwd(), args.schema);
 args.destination = path.join(process.cwd(), args.destination);
@@ -77,7 +78,7 @@ args.destination = path.join(process.cwd(), args.destination);
 const validSchema = validateSchema(args.schema);
 
 if (validSchema === true) {
-  makeApi(Object.assign({}, args, { destination: `${args.destination}/api` }));
+  makeAPI(Object.assign({}, args, { destination: `${args.destination}/api` }));
   makeApp(Object.assign({}, args, { destination: `${args.destination}/app` }));
   // makeEmbeddable(Object.assign({}, args, { destination: `${args.destination}/embeddable` }));
   console.log('not making embeddable');

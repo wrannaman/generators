@@ -1,0 +1,85 @@
+{
+  "name": "device",
+  "schema": {
+    "name": {
+      "type": "String",
+      "trim": true,
+      "min": [2, "Name is too short"],
+      "max": 100
+    },
+    "uuid": {
+      "type": "String",
+      "required": true,
+      "trim": true,
+      "min": [2, "Name is too short"],
+      "max": 100
+    },
+    "project": {
+      "type": "String",
+      "ref": "Project",
+      "required": true
+    },
+    "sshKeys": {
+      "ssh": {
+        "type": "String",
+        "trim": true,
+        "min": [2, "Name is too short"],
+        "max": 100
+      },
+      "sshRO": {
+        "type": "String",
+        "trim": true,
+        "min": [2, "Name is too short"],
+        "max": 100
+      },
+      "web": {
+        "type": "String",
+        "trim": true,
+        "min": [2, "Name is too short"],
+        "max": 100
+      },
+      "webRO": {
+        "type": "String",
+        "trim": true,
+        "min": [2, "Name is too short"],
+        "max": 100
+      }
+    },
+    "tags": [{ "type": "String" }],
+    "status": {
+      "type": "String",
+      "enum": ["active", "inactive", "deleted"],
+      "default": "active"
+    },
+    "hostname": {
+      "type": "String",
+      "trim": true,
+      "min": [2, "hostname is too short"],
+      "max": 100
+    },
+    "type": {
+      "type": "String",
+      "trim": true,
+      "min": [2, "type is too short"],
+      "max": 100
+    },
+    "platform": {
+      "type": "String",
+      "trim": true,
+      "min": [2, "platform is too short"],
+      "max": 100
+    },
+    "arch": {
+      "type": "String",
+      "trim": true,
+      "min": [2, "arch is too short"],
+      "max": 100
+    },
+    "release": {
+      "type": "String",
+      "trim": true,
+      "min": [2, "release is too short"],
+      "max": 100
+    }
+  }
+}

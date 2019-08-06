@@ -1,0 +1,21 @@
+{
+  "name": "deployment",
+  "schema": {
+    "uuid": {
+      "type": "String",
+      "required": true,
+      "trim": true,
+      "min": [2, "Name is too short"],
+      "max": 100
+    },
+    "appConfigurations": [{
+      "type": "Mixed"
+    }],
+    "tags": [{ "type": "String" }],
+    "status": {
+      "type": "String",
+      "enum": ["ready", "pending", "processing", "active", "inactive", "deleted"],
+      "default": "ready"
+    }
+  }
+}

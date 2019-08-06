@@ -20,7 +20,7 @@ const tableColumnsByType = (_type, schema, k, _title = "") => {
     title,
     field: k,
     type,
-    readonly: schema.schema[k].unique ? true : false
+    editable: schema.schema[k].unique ? 'always' : 'never'
     // customFilterAndSearch: "this.customFilterAndSearch",
   };
   // if (schema.schema[k].default) {

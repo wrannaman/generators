@@ -12,8 +12,8 @@ module.exports = ({ schema, logging, destination, name }) => {
   const top = [
     sugarGenerated(),
     `const ${uppercase(name)} = require("../../models/${uppercase(name)}");`,
-    `const { userCanApiKey } = require('../../configs/config');`,
-    `const userCan = require('../../user-can')(userCanApiKey);`,
+    // `const { userCanApiKey } = require('../../configs/config');`,
+    // `const userCan = require('../../user-can')(userCanApiKey);`,
   ];
 
   const swagger = [
@@ -55,11 +55,11 @@ module.exports = ({ schema, logging, destination, name }) => {
     `};`,
   ];
   const permissions = [
-    ``,
-    `// @TODO Permissions`,
-    `const permission = userCan('${action}', '${name}', { user: req.user, body: req.body, params: req.params, query: req.query });`,
-    `if (!permission) throw new Error('Permission denied for userCan ${action} ${name}');`,
-    ``
+    // ``,
+    // `// @TODO Permissions`,
+    // `const permission = userCan('${action}', '${name}', { user: req.user, body: req.body, params: req.params, query: req.query });`,
+    // `if (!permission) throw new Error('Permission denied for userCan ${action} ${name}');`,
+    // ``
   ];
   const safeArea = [
     `// @TODO handle safe area. Should be idempotent.`,
