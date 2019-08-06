@@ -1,6 +1,6 @@
 {
   "name": "sugar-generate",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Auto generate OAS 3.0 REST + GraphQL APIs (Node + MongoDB)",
   "main": "./index.js",
   "scripts": {

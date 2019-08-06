@@ -123,3 +123,8 @@ Thats one question we're exploring with the experimental embeddable react compon
 - Each component comes out in an embeddable format under */embed*
 - TBD - How to easily deploy these and use them.
 -
+
+
+## Updates
+
+- 8/5/19 support for mongo arrays in documents
