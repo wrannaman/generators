@@ -1,9 +1,7 @@
 # Rest/GraphQL APIs + React Components Generator 🔥
 
 [![Buy Ligit License](https://s3.us-west-1.wasabisys.com/public.sugarkubes/ligit_embed.svg)](http://localhost:3000/checkout?projectID=5d4e151add4bc1e69fe22033)
-
 [![Follow on Twitter](https://img.shields.io/twitter/follow/andrewpierno.svg?label=follow)](https://twitter.com/andrewpierno)
-
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/sugarkubes/generators.svg)](http://isitmaintained.com/project/sugarkubes/generators "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/sugarkubes/generators.svg)](http://isitmaintained.com/project/sugarkubes/generators "Percentage of issues still open")
 [![npm package](https://img.shields.io/npm/v/sugar-generate/latest.svg)](https://www.npmjs.com/package/sugar-generate)
