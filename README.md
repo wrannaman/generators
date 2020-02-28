@@ -12,6 +12,8 @@
 
 [![App Demo](https://img.youtube.com/vi/E7_ABK7nZT8/0.jpg)](https://www.youtube.com/watch?v=E7_ABK7nZT8)
 
+[![SponsoredBy.dev](https://6264d9b9.ngrok.io/img/349a8841-0021-4ca9-9b65-69d10394dc77.png)](https://6264d9b9.ngrok.io/link/349a8841-0021-4ca9-9b65-69d10394dc77)
+
 # Quick Start
 
 
