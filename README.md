@@ -12,9 +12,14 @@
 
 [![App Demo](https://img.youtube.com/vi/E7_ABK7nZT8/0.jpg)](https://www.youtube.com/watch?v=E7_ABK7nZT8)
 
-This project is sponsored by
+
+Dev: 
 
 [![SponsoredBy.dev](https://4c000311.ngrok.io/img/349a8841-0021-4ca9-9b65-69d10394dc77.png)](https://4c000311.ngrok.io/link/349a8841-0021-4ca9-9b65-69d10394dc77)
+
+This project is sponsored by
+
+[![SponsoredBy.dev](https://api.sponsoredby.dev/img/d8c4307b-ba42-400e-b475-9487c76d15c8.png)](https://api.sponsoredby.dev/link/d8c4307b-ba42-400e-b475-9487c76d15c8)
 
 # Quick Start
 
